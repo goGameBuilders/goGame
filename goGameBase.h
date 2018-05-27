@@ -64,7 +64,13 @@ void changeMatrix(int x, int y)
     yPath.push_back(y);
 }; //每一次落子后改变矩阵的状态 （同时记录当前步骤？？）
 void stepPlus(){ step++; }
-bool judge(int x, int y);
+bool judge(int x, int y)
+{
+    if (Matrix[x][y] == -1)
+        return true;
+    else
+        return false; 
+};
 bool isEnd();
 //-------------------------------------
 virtual ~goGameBase(){

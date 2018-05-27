@@ -12,7 +12,17 @@ int main(){
   while(1)
   {
       int x, y;
-      cin >> x >> y;
+      while(1)
+    {
+        cin >> x >> y;
+        if(FIR.judge(x, y))
+            break;
+        else
+        {
+            cout<<"这个地方已经有棋子了，请重新输入坐标："<<endl;
+            continue;
+        }
+    }
       FIR.changeMatrix(x, y);
       PrintChessBoard(FIR);
       FIR.stepPlus();
