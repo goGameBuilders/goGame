@@ -1,5 +1,5 @@
 //AI基类头文件
-include <iostream>
+#include <iostream>
 
 class GameAIBase{
 
