@@ -59,7 +59,7 @@ char getMatrix(int x, int y)
 };//绘制矩阵时将数字转换为符号
 void changeMatrix(int x, int y)
 {
-    Matrix[x][y] = (step + firstPlayer) % 2 + 1;
+    Matrix[x][y] = (step + firstPlayer) % 2;
     xPath.push_back(x);
     yPath.push_back(y);
 }; //每一次落子后改变矩阵的状态 （同时记录当前步骤？？）
