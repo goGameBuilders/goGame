@@ -11,3 +11,9 @@ This is a platform which we can add in different kinds of chess-like games，and
 
      the delete of a pointer is solved....
      the Frame is more better.
+
+.day 6/1/2018
+
+     solved some dead loop;
+     filled the goGameBase.cpp;
+     solved some other problems...
