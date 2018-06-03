@@ -1,35 +1,36 @@
-//ä¸»æ¸¸æˆæ–‡ä»¶
+//Ö÷ÓÎÏ·ÎÄ¼ş
 #include <iostream>
 #include <stdlib.h>
 #include "goGameBase.h"
+#include "difGame.h"
 //#include "difGame.h"
 
-void PrintChessBoard(goGameBase &type);
+void PrintChessBoard(goGameBase & type);
 
 int main() {
-	goGameBase FIR(20);
-	PrintChessBoard(FIR);
-	while (1)
+	goGameBase* FIR = new class FIR(20);
+	PrintChessBoard(*FIR);
+	while (!FIR->isEnd())
 	{
 
 		int x, y, choice;
 		while (1) {
-			cout << "1ä»£è¡¨ä¸‹å­ï¼Œ2ä»£è¡¨æ‚”æ£‹,è¯·è¾“å…¥ï¼š" << endl;
+			cout << "1´ú±íÏÂ×Ó£¬2´ú±í»ÚÆå,ÇëÊäÈë£º" << endl;
 			if (cin >> choice) {
 				if (choice == 1)
 				{
 					while (1)
 					{
 						if (cin >> x >> y) {
-							if (FIR.judge(x, y))
+							if (FIR->judge(x, y))
 								break;
 							else
 							{
-								cout << "è¿™ä¸ªåœ°æ–¹å·²ç»æœ‰æ£‹å­æˆ–è€…è¶Šç•Œäº†ï¼Œè¯·é‡æ–°è¾“å…¥åæ ‡ï¼š" << endl;
+								cout << "Õâ¸öµØ·½ÒÑ¾­ÓĞÆå×Ó»òÕßÔ½½çÁË£¬ÇëÖØĞÂÊäÈë×ø±ê£º" << endl;
 								continue;
 							}
 						}
-						else//é˜²æ­¢cinæ ¼å¼é”™è¯¯æ— é™å¾ªç¯
+						else//·ÀÖ¹cin¸ñÊ½´íÎóÎŞÏŞÑ­»·
 						{
 							cin.clear();
 							cin.ignore();
@@ -39,30 +40,37 @@ int main() {
 				}
 				else if (choice == 2)
 				{
-					if (FIR.regret())
+					if (FIR->regret())
 					{
-						PrintChessBoard(FIR);
+						PrintChessBoard(*FIR);
 						cout << "regret successfully" << endl;
 					}
 					else
 						cout << "you can't regret" << endl;
 				}
 			}
-			else //é˜²æ­¢cinæ ¼å¼é”™è¯¯æ— é™å¾ªç¯
+			else //·ÀÖ¹cin¸ñÊ½´íÎóÎŞÏŞÑ­»·
 			{
 				cin.clear();
 				cin.ignore();
 			}
 		}
-		FIR.changeMatrix(x, y);
-		PrintChessBoard(FIR);
+		FIR->changeMatrix(x, y);
+		PrintChessBoard(*FIR);
 	}
+	if (FIR->isEnd() == 1)
+	{
+		cout << "The White win!";
+	}
+	else
+		cout << "The Black win!";
+	return 0;
 }
 
 
-void PrintChessBoard(goGameBase& type)    //æ‰“å°æ£‹ç›˜ï¼Œè¿™ä¸ªå‡½æ•°å¯ä»¥è‡ªå·±è°ƒæ•´
+void PrintChessBoard(goGameBase& type)    //´òÓ¡ÆåÅÌ£¬Õâ¸öº¯Êı¿ÉÒÔ×Ô¼ºµ÷Õû
 {
-	system("cls");                //ç³»ç»Ÿè°ƒç”¨ï¼Œæ¸…ç©ºå±å¹•
+	system("cls");                //ÏµÍ³µ÷ÓÃ£¬Çå¿ÕÆÁÄ»
 								  //system("clear");			//mac or linux
 	if (type.getWhoTurn()) {
 		cout << "Black's Turn" << endl;
@@ -73,14 +81,14 @@ void PrintChessBoard(goGameBase& type)    //æ‰“å°æ£‹ç›˜ï¼Œè¿™ä¸ªå‡½æ•°å¯ä»¥è‡ª
 	{
 		for (int j = 0; j < type.getsize() + 1; ++j)
 		{
-			if (i == 0)                               //æ‰“å°è¡Œæ•°å­—
+			if (i == 0)                               //´òÓ¡ĞĞÊı×Ö
 			{
 				if (j != 0)
 					printf(" %2d ", j);
 				else
 					printf("    ");
 			}
-			else if (j == 0)                //æ‰“å°åˆ—æ•°å­—
+			else if (j == 0)                //´òÓ¡ÁĞÊı×Ö
 				printf(" %2d ", i);
 			else
 			{

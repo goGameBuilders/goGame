@@ -1,1 +1,16 @@
-//ä¸åŒçš„æ¸¸æˆå…·ä½“ç±»å¤´æ–‡ä»¶
+#pragma once
+
+#include "goGameBase.h"
+#include <iostream>
+
+//¼Ì³Ğºó½öĞèÊµÏÖupdateMatrixµÄÏà¹Øº¯ÊıÒÔ¼°Ê¤ÀûÅĞ¶¨µÄÏà¹Øº¯Êı¼´¿É
+
+class FIR  :public goGameBase {
+public:
+	FIR();
+	FIR(int size);
+	virtual void updateMatrix(int step0);
+	virtual int isEnd();
+	~FIR() {};
+};
+//ÆäËû×Ô¶¨ÒåÆåÀàÓÎÏ·

@@ -1,5 +1,5 @@
 #pragma once
-//æ¸¸æˆåŸºç±»å¤´æ–‡ä»¶
+//ÓÎÏ·»ùÀàÍ·ÎÄ¼ş
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -10,8 +10,8 @@ using namespace std;
 class goGameBase {
 private:
 	int size;
-	int** Matrix;// çŸ©é˜µçŠ¶æ€ï¼Œæ”¯æŒæœªçŸ¥å¤§å°
-	int step;// ä¸‹è¿‡çš„æ­¥æ•°
+	int** Matrix;// ¾ØÕó×´Ì¬£¬Ö§³ÖÎ´Öª´óĞ¡
+	int step;// ÏÂ¹ıµÄ²½Êı
 	bool firstPlayer;
 	vector <int> xPath;
 	vector <int> yPath;
@@ -19,17 +19,28 @@ public:
 	goGameBase();
 	goGameBase(int mySize);
 	void changeMatrix(int x, int y);
-	//æ¯ä¸€æ¬¡è½å­åæ”¹å˜çŸ©é˜µçš„çŠ¶æ€ ï¼ˆåŒæ—¶è®°å½•å½“å‰æ­¥éª¤ï¼‰
-	// æŠŠupdateåˆ†å¼€æ¥ï¼Œè®°å½•æ˜¯é€šç”¨çš„
+	//Ã¿Ò»´ÎÂä×Óºó¸Ä±ä¾ØÕóµÄ×´Ì¬ £¨Í¬Ê±¼ÇÂ¼µ±Ç°²½Öè£©
+	// °Ñupdate·Ö¿ªÀ´£¬¼ÇÂ¼ÊÇÍ¨ÓÃµÄ
 	bool regret();
 	// virtual bool judge(int x, int y)=0;
 	// virtual bool isEnd()=0;
 	// for test----------------------------
-	void updateMarixTotal() ;
-	void updateMarix(int step0) {//æœ€ååº”å½“æ˜¯è™šå‡½æ•°ï¼Œè¾“å…¥å€¼åº”å½“å¯å˜åŠ¨ï¼Œé˜²æ­¢æ‚”æ£‹é‡æ–°è·‘æ—¶stepæ˜¯å¸¸é‡å¯¼è‡´çš„é»‘æ£‹ç™½æ——å…¨å˜æˆåŒä¸€ç§é¢œè‰²
-		Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;
+	void updateMatrixTotal() ;
+	virtual void updateMatrix(int step0) {//×îºóÓ¦µ±ÊÇĞéº¯Êı£¬ÊäÈëÖµÓ¦µ±¿É±ä¶¯£¬·ÀÖ¹»ÚÆåÖØĞÂÅÜÊ±stepÊÇ³£Á¿µ¼ÖÂµÄºÚÆå°×ÆìÈ«±ä³ÉÍ¬Ò»ÖÖÑÕÉ«
+	//	Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;
 	};
-	const int getsize() { return size; };
+	inline const int getsize() { return size; };
+	inline void touchMatrix(int x, int y, bool state) {
+		Matrix[x][y] = state;
+	}//Ìá¹©×Óº¯Êı¶Ô¾ØÕóµÄ·ÃÎÊ½Ó¿Ú£¨¿É¸Ä±ä£©
+	inline const int getPath(int x, bool which)//Ìá¹©Â·¾¶µÄ·ÃÎÊ½Ó¿Ú£¨Ö»¶Á£©which Îª1Ê±·µ»Øx 
+	{
+		if (which)
+			return xPath[x];
+		return yPath[x];
+	}
+	inline const int getwhich(int x, int y) { return Matrix[x][y]; };//»ñµÃ£¨x£¬y£©´¦µÄÆå×Ó×´Ì¬
+	inline const bool getFirstPlayer() { return firstPlayer; }//
 	inline const bool getWhoTurn() { return (firstPlayer + step) % 2; };
 	inline char getMatrix(int x, int y)
 	{
@@ -39,7 +50,8 @@ public:
 			return 'o';
 		else if (Matrix[x][y] == 1)
 			return 'x';
-	};//ç»˜åˆ¶çŸ©é˜µæ—¶å°†æ•°å­—è½¬æ¢ä¸ºç¬¦å·
+		return ' ';
+	};//»æÖÆ¾ØÕóÊ±½«Êı×Ö×ª»»Îª·ûºÅ
 
 
 	inline bool judge(int x, int y)
@@ -49,7 +61,7 @@ public:
 		else
 			return false;
 	};
-	bool isEnd();
+	virtual int isEnd()= 0;
 	//-------------------------------------
 	virtual ~goGameBase() {
 		for (int i = 0; i <= size; i++) {
