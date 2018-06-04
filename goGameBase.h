@@ -19,12 +19,7 @@ public:
 	goGameBase();
 	goGameBase(int mySize);
 	void changeMatrix(int x, int y);
-	//每一次落子后改变矩阵的状态 （同时记录当前步骤）
-	// 把update分开来，记录是通用的
 	bool regret();
-	// virtual bool judge(int x, int y)=0;
-	// virtual bool isEnd()=0;
-	// for test----------------------------
 	void updateMatrixTotal() ;
 	virtual void updateMatrix(int step0) {//最后应当是虚函数，输入值应当可变动，防止悔棋重新跑时step是常量导致的黑棋白旗全变成同一种颜色
 	//	Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;
@@ -62,7 +57,6 @@ public:
 			return false;
 	};
 	virtual int isEnd()= 0;
-	//-------------------------------------
 	virtual ~goGameBase() {
 		for (int i = 0; i <= size; i++) {
 			delete[] Matrix[i];
