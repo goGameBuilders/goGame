@@ -3,7 +3,7 @@
 #include "goGameBase.h"
 #include <iostream>
 
-//¼Ì³Ğºó½öĞèÊµÏÖupdateMatrixµÄÏà¹Øº¯ÊıÒÔ¼°Ê¤ÀûÅĞ¶¨µÄÏà¹Øº¯Êı¼´¿É
+//ç»§æ‰¿åä»…éœ€å®ç°updateMatrixçš„ç›¸å…³å‡½æ•°ä»¥åŠèƒœåˆ©åˆ¤å®šçš„ç›¸å…³å‡½æ•°å³å¯
 
 class FIR  :public goGameBase {
 public:
@@ -13,4 +13,4 @@ public:
 	virtual int isEnd();
 	~FIR() {};
 };
-//ÆäËû×Ô¶¨ÒåÆåÀàÓÎÏ·
+//å…¶ä»–è‡ªå®šä¹‰æ£‹ç±»æ¸¸æˆ

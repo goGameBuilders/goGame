@@ -1,4 +1,4 @@
-//Ö÷ÓÎÏ·ÎÄ¼ş
+//ä¸»æ¸¸æˆæ–‡ä»¶
 #include <iostream>
 #include <stdlib.h>
 #include "goGameBase.h"
@@ -15,7 +15,7 @@ int main() {
 
 		int x, y, choice;
 		while (1) {
-			cout << "1´ú±íÏÂ×Ó£¬2´ú±í»ÚÆå,ÇëÊäÈë£º" << endl;
+			cout << "1ä»£è¡¨ä¸‹å­ï¼Œ2ä»£è¡¨æ‚”æ£‹,è¯·è¾“å…¥ï¼š" << endl;
 			if (cin >> choice) {
 				if (choice == 1)
 				{
@@ -26,11 +26,11 @@ int main() {
 								break;
 							else
 							{
-								cout << "Õâ¸öµØ·½ÒÑ¾­ÓĞÆå×Ó»òÕßÔ½½çÁË£¬ÇëÖØĞÂÊäÈë×ø±ê£º" << endl;
+								cout << "è¿™ä¸ªåœ°æ–¹å·²ç»æœ‰æ£‹å­æˆ–è€…è¶Šç•Œäº†ï¼Œè¯·é‡æ–°è¾“å…¥åæ ‡ï¼š" << endl;
 								continue;
 							}
 						}
-						else//·ÀÖ¹cin¸ñÊ½´íÎóÎŞÏŞÑ­»·
+						else//é˜²æ­¢cinæ ¼å¼é”™è¯¯æ— é™å¾ªç¯
 						{
 							cin.clear();
 							cin.ignore();
@@ -49,7 +49,7 @@ int main() {
 						cout << "you can't regret" << endl;
 				}
 			}
-			else //·ÀÖ¹cin¸ñÊ½´íÎóÎŞÏŞÑ­»·
+			else //é˜²æ­¢cinæ ¼å¼é”™è¯¯æ— é™å¾ªç¯
 			{
 				cin.clear();
 				cin.ignore();
@@ -68,9 +68,9 @@ int main() {
 }
 
 
-void PrintChessBoard(goGameBase& type)    //´òÓ¡ÆåÅÌ£¬Õâ¸öº¯Êı¿ÉÒÔ×Ô¼ºµ÷Õû
+void PrintChessBoard(goGameBase& type)    //æ‰“å°æ£‹ç›˜ï¼Œè¿™ä¸ªå‡½æ•°å¯ä»¥è‡ªå·±è°ƒæ•´
 {
-	system("cls");                //ÏµÍ³µ÷ÓÃ£¬Çå¿ÕÆÁÄ»
+	system("cls");                //ç³»ç»Ÿè°ƒç”¨ï¼Œæ¸…ç©ºå±å¹•
 								  //system("clear");			//mac or linux
 	if (type.getWhoTurn()) {
 		cout << "Black's Turn" << endl;
@@ -81,14 +81,14 @@ void PrintChessBoard(goGameBase& type)    //´òÓ¡ÆåÅÌ£¬Õâ¸öº¯Êı¿ÉÒÔ×Ô¼ºµ÷Õû
 	{
 		for (int j = 0; j < type.getsize() + 1; ++j)
 		{
-			if (i == 0)                               //´òÓ¡ĞĞÊı×Ö
+			if (i == 0)                               //æ‰“å°è¡Œæ•°å­—
 			{
 				if (j != 0)
 					printf(" %2d ", j);
 				else
 					printf("    ");
 			}
-			else if (j == 0)                //´òÓ¡ÁĞÊı×Ö
+			else if (j == 0)                //æ‰“å°åˆ—æ•°å­—
 				printf(" %2d ", i);
 			else
 			{

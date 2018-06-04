@@ -1,10 +1,10 @@
-//ÓÎÏ·»ùÀà£¬ĞéÀà
+//æ¸¸æˆåŸºç±»ï¼Œè™šç±»
 #include "goGameBase.h"
 
 goGameBase::goGameBase() : size(19), step(0) {
 
-		srand((unsigned)time(nullptr));//Éú³ÉËæ»úÊıÖÖ×Ó
-		firstPlayer = rand() % 2;//½«ÏÈÊÖ¸³Ëæ»ú³õÖµ
+		srand((unsigned)time(nullptr));//ç”Ÿæˆéšæœºæ•°ç§å­
+		firstPlayer = rand() % 2;//å°†å…ˆæ‰‹èµ‹éšæœºåˆå€¼
 		Matrix = new int*[size + 1];
 		for (int i = 0; i <= size; i++)
 		{
@@ -18,8 +18,8 @@ goGameBase::goGameBase() : size(19), step(0) {
 
 goGameBase::goGameBase(int mySize) : size(mySize), step(0) {
 
-	srand((unsigned)time(nullptr));//Éú³ÉËæ»úÊıÖÖ×Ó
-	firstPlayer = rand() % 2;//½«ÏÈÊÖ¸³Ëæ»ú³õÖµ
+	srand((unsigned)time(nullptr));//ç”Ÿæˆéšæœºæ•°ç§å­
+	firstPlayer = rand() % 2;//å°†å…ˆæ‰‹èµ‹éšæœºåˆå€¼
 	Matrix = new int*[size + 1];
 	for (int i = 0; i <= size; i++)
 	{

@@ -1,5 +1,5 @@
 #pragma once
-//ÓÎÏ·»ùÀàÍ·ÎÄ¼ş
+//æ¸¸æˆåŸºç±»å¤´æ–‡ä»¶
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -10,8 +10,8 @@ using namespace std;
 class goGameBase {
 private:
 	int size;
-	int** Matrix;// ¾ØÕó×´Ì¬£¬Ö§³ÖÎ´Öª´óĞ¡
-	int step;// ÏÂ¹ıµÄ²½Êı
+	int** Matrix;// çŸ©é˜µçŠ¶æ€ï¼Œæ”¯æŒæœªçŸ¥å¤§å°
+	int step;// ä¸‹è¿‡çš„æ­¥æ•°
 	bool firstPlayer;
 	vector <int> xPath;
 	vector <int> yPath;
@@ -19,27 +19,27 @@ public:
 	goGameBase();
 	goGameBase(int mySize);
 	void changeMatrix(int x, int y);
-	//Ã¿Ò»´ÎÂä×Óºó¸Ä±ä¾ØÕóµÄ×´Ì¬ £¨Í¬Ê±¼ÇÂ¼µ±Ç°²½Öè£©
-	// °Ñupdate·Ö¿ªÀ´£¬¼ÇÂ¼ÊÇÍ¨ÓÃµÄ
+	//æ¯ä¸€æ¬¡è½å­åæ”¹å˜çŸ©é˜µçš„çŠ¶æ€ ï¼ˆåŒæ—¶è®°å½•å½“å‰æ­¥éª¤ï¼‰
+	// æŠŠupdateåˆ†å¼€æ¥ï¼Œè®°å½•æ˜¯é€šç”¨çš„
 	bool regret();
 	// virtual bool judge(int x, int y)=0;
 	// virtual bool isEnd()=0;
 	// for test----------------------------
 	void updateMatrixTotal() ;
-	virtual void updateMatrix(int step0) {//×îºóÓ¦µ±ÊÇĞéº¯Êı£¬ÊäÈëÖµÓ¦µ±¿É±ä¶¯£¬·ÀÖ¹»ÚÆåÖØĞÂÅÜÊ±stepÊÇ³£Á¿µ¼ÖÂµÄºÚÆå°×ÆìÈ«±ä³ÉÍ¬Ò»ÖÖÑÕÉ«
+	virtual void updateMatrix(int step0) {//æœ€ååº”å½“æ˜¯è™šå‡½æ•°ï¼Œè¾“å…¥å€¼åº”å½“å¯å˜åŠ¨ï¼Œé˜²æ­¢æ‚”æ£‹é‡æ–°è·‘æ—¶stepæ˜¯å¸¸é‡å¯¼è‡´çš„é»‘æ£‹ç™½æ——å…¨å˜æˆåŒä¸€ç§é¢œè‰²
 	//	Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;
 	};
 	inline const int getsize() { return size; };
 	inline void touchMatrix(int x, int y, bool state) {
 		Matrix[x][y] = state;
-	}//Ìá¹©×Óº¯Êı¶Ô¾ØÕóµÄ·ÃÎÊ½Ó¿Ú£¨¿É¸Ä±ä£©
-	inline const int getPath(int x, bool which)//Ìá¹©Â·¾¶µÄ·ÃÎÊ½Ó¿Ú£¨Ö»¶Á£©which Îª1Ê±·µ»Øx 
+	}//æä¾›å­å‡½æ•°å¯¹çŸ©é˜µçš„è®¿é—®æ¥å£ï¼ˆå¯æ”¹å˜ï¼‰
+	inline const int getPath(int x, bool which)//æä¾›è·¯å¾„çš„è®¿é—®æ¥å£ï¼ˆåªè¯»ï¼‰which ä¸º1æ—¶è¿”å›x 
 	{
 		if (which)
 			return xPath[x];
 		return yPath[x];
 	}
-	inline const int getwhich(int x, int y) { return Matrix[x][y]; };//»ñµÃ£¨x£¬y£©´¦µÄÆå×Ó×´Ì¬
+	inline const int getwhich(int x, int y) { return Matrix[x][y]; };//è·å¾—ï¼ˆxï¼Œyï¼‰å¤„çš„æ£‹å­çŠ¶æ€
 	inline const bool getFirstPlayer() { return firstPlayer; }//
 	inline const bool getWhoTurn() { return (firstPlayer + step) % 2; };
 	inline char getMatrix(int x, int y)
@@ -51,7 +51,7 @@ public:
 		else if (Matrix[x][y] == 1)
 			return 'x';
 		return ' ';
-	};//»æÖÆ¾ØÕóÊ±½«Êı×Ö×ª»»Îª·ûºÅ
+	};//ç»˜åˆ¶çŸ©é˜µæ—¶å°†æ•°å­—è½¬æ¢ä¸ºç¬¦å·
 
 
 	inline bool judge(int x, int y)

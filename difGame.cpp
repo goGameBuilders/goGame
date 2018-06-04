@@ -1,7 +1,7 @@
 #include "goGameBase.h"
 #include "difGame.h"
 
-// FIR函数实现
+// FIR鍑芥暟瀹炵幇
 FIR::FIR() :goGameBase(){
 }
 
@@ -28,7 +28,7 @@ int FIR::isEnd() {
 		for (int j = 1; j <= getsize() - 4; j++)
 			if (getwhich(i+4, j) == 1 && getwhich(i + 3, j + 1) == 1 && getwhich(i + 2, j + 2) == 1 && getwhich(i + 1, j + 3) == 1 && getwhich(i, j + 4) == 1)
 				return 1;
-	//白棋胜利
+	//鐧芥鑳滃埄
 	for (int i = 1; i <= getsize(); i++)
 		for (int j = 1; j <= getsize() - 4; j++)
 			if (getwhich(i, j) == 0 && getwhich(i, j + 1) == 0 && getwhich(i, j + 2) == 0 && getwhich(i, j + 3) == 0 && getwhich(i, j + 4) == 0)
@@ -45,7 +45,7 @@ int FIR::isEnd() {
 		for (int j = 1; j <= getsize() - 4; j++)
 			if (getwhich(i + 4, j) == 0 && getwhich(i + 3, j + 1) == 0 && getwhich(i + 2, j + 2) == 0 && getwhich(i + 1, j + 3) == 0 && getwhich(i, j + 4) == 0)
 				return -1;
-	//黑棋胜利
+	//榛戞鑳滃埄
 	return 0;
 }
-//其他自定义棋类游戏的实现
+//鍏朵粬鑷畾涔夋绫绘父鎴忕殑瀹炵幇
