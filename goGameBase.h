@@ -20,6 +20,9 @@ public:
 	goGameBase(int mySize);
 	void changeMatrix(int x, int y);
 	bool regret();
+	void restartGame();
+	void saveGame();
+	void loadGame();
 	void updateMatrixTotal() ;
 	virtual void updateMatrix(int step0) {//最后应当是虚函数，输入值应当可变动，防止悔棋重新跑时step是常量导致的黑棋白旗全变成同一种颜色
 	//	Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;
