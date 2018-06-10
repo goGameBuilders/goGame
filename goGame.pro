@@ -25,19 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        gogameui.cpp \
         difAI.cpp \
         difGame.cpp \
         goGameBase.cpp \
         goGameAIBase.cpp \
-        goGamePlatform.cpp
+        goGamePlatform.cpp \
+    window_start.cpp \
+    window_select.cpp \
+    window_play.cpp
 HEADERS += \
-        gogameui.h \
         difAI.h \
         difGame.h \
         goGameBase.h \
         goGameAIBase.h \
-        goGamePlatform.h
+        goGamePlatform.h \
+    window_start.h \
+    window_select.h \
+    window_play.h
 
 FORMS += \
-        gogameui.ui
+    window_start.ui \
+    window_select.ui \
+    window_play.ui
