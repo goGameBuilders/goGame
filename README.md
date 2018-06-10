@@ -17,3 +17,9 @@ This is a platform which we can add in different kinds of chess-like games，and
      solved some dead loop;
      filled the goGameBase.cpp;
      solved some other problems...
+
+·day 6/11/2018
+
+    finished the basic window framework and logic for the qt ui.
+    finished the basic control using mouse
+    we can test our code on qt's ui now!
