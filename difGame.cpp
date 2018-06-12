@@ -12,6 +12,9 @@ void FIR::updateMatrix(int step0) {
 	touchMatrix(getPath(step0 - 1, 1), getPath(step0 - 1, 0), (getFirstPlayer() + step0) % 2);
 }
 int FIR::isEnd() {
+    if(getstep() == getsize()*getsize())
+        return 2;
+    // 平局
 	for (int i = 1; i <= getsize(); i++)
 		for (int j = 1; j <= getsize() - 4; j++)
 			if (getwhich(i, j) == 1 && getwhich(i, j + 1) == 1 && getwhich(i, j + 2) == 1 && getwhich(i, j + 3) == 1 && getwhich(i, j + 4) == 1)

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtWidgets>
+#include <QtCore>
 #include <QPainter>
 #include <QMouseEvent>
 #include <math.h>
@@ -24,7 +25,8 @@ void Window_Play::paintEvent(QPaintEvent *)
 {
   paint=new QPainter(this);
   paint->begin(this);//主窗口
-
+  QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+  ui->label->setText(gameinfo);
   paint->setPen(QPen(Qt::darkMagenta,2,Qt::SolidLine));//钢笔工具：颜色，线号，实线
   //画SIZE+1条横线
   for(int i=1;i<SIZE+1;i++)
@@ -36,11 +38,6 @@ void Window_Play::paintEvent(QPaintEvent *)
     {
       paint->drawLine(margin_x+(block_size)*i,margin_y+block_size,margin_x+(block_size)*i,margin_y+(block_size)*(SIZE));
     }
-  if(ClickPosCol != -1 && ClickPosRow != -1)
-  {
-      if(gameplatform->getgame()->judge(ClickPosRow, ClickPosCol))
-          gameplatform->getgame()->changeMatrix(ClickPosRow,ClickPosCol);
-    }
   QBrush brush;
   brush.setStyle(Qt::SolidPattern);
 
@@ -48,18 +45,14 @@ void Window_Play::paintEvent(QPaintEvent *)
     for(int j = 1; j <=SIZE; j ++)
     {
         if(gameplatform->getgame()->getMatrix(i, j)==0){
-            paint->save();
-             brush.setColor(Qt::black);
-             paint->setBrush(brush);
-             paint->drawEllipse(margin_x + j * block_size - block_size/4,margin_y + i * block_size - block_size/4,block_size/2,block_size/2); //画椭圆：中心点X,Y,宽度，高度
-            paint->restore();
+            brush.setColor(Qt::black);
+            paint->setBrush(brush);
+            paint->drawEllipse(margin_x + j * block_size - block_size/4,margin_y + i * block_size - block_size/4,block_size/2,block_size/2); //画椭圆：中心点X,Y,宽度，高度
         }
         else if(gameplatform->getgame()->getMatrix(i, j)==1){
-            paint->save();
             brush.setColor(Qt::white);
             paint->setBrush(brush);
             paint->drawEllipse(margin_x + j * block_size - block_size/4,margin_y + i * block_size - block_size/4,block_size/2,block_size/2); //画椭圆：中心点X,Y,宽度，高度
-            paint->restore();
         }
     }
 
@@ -116,6 +109,29 @@ void Window_Play::mousePressEvent(QMouseEvent *event)
                    ClickPosCol = col + 1;
                }
     }   //if
+    if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd()) //点击有效并且没有结束游戏
+    {
+        if(gameplatform->getgame()->judge(ClickPosRow, ClickPosCol))
+            gameplatform->getgame()->changeMatrix(ClickPosRow,ClickPosCol);
+        if(gameplatform->getgame()->isEnd()){
+            int state = gameplatform->getgame()->isEnd();
+             QMessageBox::StandardButton reply;
+             switch(state){
+            case -1:
+                reply = QMessageBox::information(this, "游戏结束", "黑棋胜利");
+                break;
+            case 1:
+                reply = QMessageBox::information(this, "游戏结束", "白棋胜利");
+                break;
+            case 2:
+                reply = QMessageBox::information(this, "游戏结束", "平局");
+                break;
+             }
+        }
+        QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+        ui->label->setText(gameinfo);
+    }
+
     update();
 }
 

@@ -14,7 +14,7 @@ goGameBase::goGameBase() : size(19), step(0) {
 				Matrix[i][j] = -1;
 			}
 		}
-	};
+    }
 
 goGameBase::goGameBase(int mySize) : size(mySize), step(0) {
 

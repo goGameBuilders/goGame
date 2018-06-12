@@ -4,7 +4,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <vector>
-
+#include <string>
 using namespace std;
 
 class goGameBase {
@@ -32,6 +32,7 @@ public:
 	//	Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;
     }
     inline const int getsize() { return size; }
+    inline const int getstep() { return step; }
 	inline const int getPath(int x, bool which)//提供路径的访问接口（只读）which 为1时返回x 
 	{
 		if (which)
@@ -46,7 +47,25 @@ public:
         return Matrix[x][y];
     } //绘制矩阵时将数字转换为符号
 
-
+    inline const std::string getinfo(){
+        std::string info;
+        info += "Total steps: \n";
+        info += to_string(getstep());
+        info += "\n";
+        if(!isEnd()){
+            if(getWhoTurn()==0)
+               info+="The white's turn\n";
+            else
+                info+="The black's turn\n";
+        }
+        else if(isEnd()==-1)
+            info+="The black win!\n";
+        else if(isEnd()== 1)
+            info+="The white win! \n";
+        else if(isEnd()== 2)
+            info += "Tie!\n";
+        return info;
+    }
 	inline bool judge(int x, int y)
 	{
 		if (x > 0 && x <= size && y > 0 && y <= size && Matrix[x][y] == -1)
