@@ -10,12 +10,13 @@ using namespace std;
 class goGamePlatform{
 
 private:
-    string type;      //游玩游戏的种类
-    goGameBase *game; //游戏基类指针
+    int type;      //游玩游戏的种类 1 五子棋  2 黑白棋 3 围棋
+    int vsWho;      // 1 人机 2 人人  3 联网对战
+    goGameBase *game = nullptr; //游戏基类指针
     goGameNet *net; //通信类指针
 public:
-    goGamePlatform();
-    void gameSelect(string myType); //决定生成游戏的指针
-    ~goGamePlatform();
-
+    goGamePlatform(){}
+    void gameSelect(int myType, int myVsWho); //决定生成游戏的指针
+    goGameBase* getgame(){return game;} //获得游戏指针
+    ~goGamePlatform(){}
 };

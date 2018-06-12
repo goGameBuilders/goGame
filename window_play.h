@@ -1,6 +1,6 @@
 #ifndef WINDOW_PLAY_H
 #define WINDOW_PLAY_H
-
+#include "goGamePlatform.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -12,7 +12,7 @@ class Window_Play : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Window_Play(QWidget *parent = 0);
+    explicit Window_Play(goGamePlatform* _gameplatform,QWidget *parent = 0);
     ~Window_Play();
 
     void paintEvent(QPaintEvent *);         //绘图函数声明
@@ -21,6 +21,7 @@ public:
 
 private:
     Ui::Window_Play *ui;
+    goGamePlatform* gameplatform;
     const int SIZE = 10;           //棋盘大小
     const int block_size = 40;     //棋盘格子间宽度
     const int margin_x = 20;       //棋盘起始x坐标(边界值)

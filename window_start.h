@@ -2,7 +2,7 @@
 #define WINDOW_START_H
 
 #include <QMainWindow>
-
+#include "goGamePlatform.h"
 namespace Ui {
 class Window_Start;
 }
@@ -24,6 +24,7 @@ private slots:
 
 private:
     Ui::Window_Start *ui;
+    goGamePlatform* gameplatform;
 };
 
 #endif // WINDOW_START_H

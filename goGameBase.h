@@ -41,15 +41,9 @@ public:
     inline const int getwhich(int x, int y) { return Matrix[x][y]; } //获得（x，y）处的棋子状态
 	inline const bool getFirstPlayer() { return firstPlayer; }//
     inline const bool getWhoTurn() { return (firstPlayer + step) % 2; }
-	inline char getMatrix(int x, int y)
+    inline int getMatrix(int x, int y)
 	{
-		if (Matrix[x][y] == -1)
-			return ' ';
-		else if (Matrix[x][y] == 0)
-			return 'o';
-		else if (Matrix[x][y] == 1)
-			return 'x';
-		return ' ';
+        return Matrix[x][y];
     } //绘制矩阵时将数字转换为符号
 
 

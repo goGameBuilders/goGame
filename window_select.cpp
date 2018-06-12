@@ -3,9 +3,10 @@
 #include "window_play.h"
 #include "ui_window_play.h"
 
-Window_Select::Window_Select(QWidget *parent) :
+Window_Select::Window_Select(goGamePlatform* _gameplatform, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Window_Select)
+    ui(new Ui::Window_Select),
+    gameplatform(_gameplatform)
 {
     ui->setupUi(this);
     ui->radioButton->click();
@@ -19,6 +20,7 @@ Window_Select::~Window_Select()
 void Window_Select::on_pushButton_clicked()
 {
     this->close();
-    Window_Play* game = new Window_Play();
+    Window_Play* game = new Window_Play(gameplatform);
+    gameplatform->gameSelect(1, 2);
     game->show();
 }   //Select界面中五子棋按钮
