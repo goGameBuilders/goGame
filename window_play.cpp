@@ -1,5 +1,7 @@
 #include "window_play.h"
 #include "ui_window_play.h"
+#include "window_start.h"
+#include "ui_window_start.h"
 
 #include <QWidget>
 #include <QtWidgets>
@@ -133,14 +135,33 @@ void Window_Play::mousePressEvent(QMouseEvent *event)
     }
 
     update();
-}
+}               //鼠标事件函数
 
 
 
 
+void Window_Play::on_pushButton_5_clicked()
+{
+    this->close();
+}       //游戏界面中Exit Game 按钮
 
+void Window_Play::on_pushButton_6_clicked()
+{
+    this->close();
+    Window_Start* start = new Window_Start();
+    start->show();
+}       //游戏界面中MainWindow按钮
 
+void Window_Play::on_pushButton_3_clicked()
+{
 
+    gameplatform->getgame()->regret();
+    if(!gameplatform->getgame()->regret())
+    {
+        QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+        gameinfo += " \n You can't regret now!";
+        ui->label->setText(gameinfo);
+    }
+    update();
 
-
-
+}   //游戏界面中Regret按钮

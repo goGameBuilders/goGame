@@ -5,6 +5,12 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+
+#include <QtCore>
+#include <QWidget>
+#include <QtWidgets>
+#include <QJsonDocument>
+
 using namespace std;
 
 class goGameBase {
@@ -20,13 +26,23 @@ protected:
         Matrix[x][y] = state;
     }//提供子函数对矩阵的访问接口(仅用于改变)
 public:
-	goGameBase();
+    enum SaveFormat{
+        Json, Binary
+    };                  //保存游戏的所有格式
+
+    goGameBase();
 	goGameBase(int mySize);
     void changeMatrix(int x, int y);
-	bool regret();
-	void restartGame();
-	void saveGame();
-	void loadGame();
+
+    bool regret();          //悔棋函数
+    void restartGame();     //重开游戏函数
+
+    bool saveGame()  const;
+    bool loadGame();
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
+
 	void updateMatrixTotal() ;
     virtual void updateMatrix(int) {//最后应当是虚函数，输入值应当可变动，防止悔棋重新跑时step是常量导致的黑棋白旗全变成同一种颜色
 	//	Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;

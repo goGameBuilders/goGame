@@ -36,7 +36,8 @@ void goGameBase::changeMatrix(int x, int y) {
 	yPath.push_back(y);
 	step++;
 	updateMatrix(step);
-};
+}
+
 bool goGameBase::regret() {
 		if (step >= 2)
 		{
@@ -56,8 +57,29 @@ void goGameBase::updateMatrixTotal(){
 	for (int i = 1; i <= size; i++)
 	for (int j = 1; j <= size; j++)
 		Matrix[i][j] = -1;
-for (int i = 1; i <= step; i++)
-{
-	updateMatrix(i);
+    for (int i = 1; i <= step; i++)
+    {
+        updateMatrix(i);
+    }
 }
-};
+
+void goGameBase::write(QJsonObject &json) const
+{
+    QJsonArray savematrix[size + 1];
+    for(int i = 1; i <= size; i++)
+        for(int j = 1; j <= size; j++)
+            savematrix[i].append(Matrix[i][j]);
+    json["Matrix"] = savematrix[1];
+}       //向json中写入数据
+
+
+void goGameBase::read(const QJsonObject &json)
+{
+
+}      //从json中读取数据
+
+
+void goGameBase::restartGame()
+{
+
+}

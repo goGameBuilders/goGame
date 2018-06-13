@@ -19,6 +19,13 @@ public:
     void mousePressEvent(QMouseEvent *event);    //监视鼠标移动情况函数
 
 
+private slots:
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Window_Play *ui;
     goGamePlatform* gameplatform;
