@@ -3,6 +3,7 @@
 #include "window_start.h"
 #include "ui_window_start.h"
 
+
 #include <QWidget>
 #include <QtWidgets>
 #include <QtCore>
@@ -27,8 +28,14 @@ void Window_Play::paintEvent(QPaintEvent *)
 {
   paint=new QPainter(this);
   paint->begin(this);//主窗口
-  QString gameinfo = gameplatform->getgame()->getinfo().c_str();
-  ui->label->setText(gameinfo);
+
+ if(!msgFirst)
+ {
+     QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+     ui->label->setText(gameinfo);
+     msgFirst = true;
+ }
+
   paint->setPen(QPen(Qt::darkMagenta,2,Qt::SolidLine));//钢笔工具：颜色，线号，实线
   //画SIZE+1条横线
   for(int i=1;i<SIZE+1;i++)
@@ -70,6 +77,9 @@ void Window_Play::paintEvent(QPaintEvent *)
 
 void Window_Play::mousePressEvent(QMouseEvent *event)
 {
+    ClickPosCol = -1;
+    ClickPosRow = -1;               //默认值
+
     int tmpx = event->x();
     int tmpy = event->y();
     if(tmpx >= margin_x + block_size / 2 && tmpx < margin_x + (block_size) * (SIZE - 1/2)
@@ -81,8 +91,6 @@ void Window_Play::mousePressEvent(QMouseEvent *event)
         int leftTopx = margin_x + block_size * col;
         int leftTopy = margin_y + block_size * row; //获取左上角真实坐标
 
-        ClickPosCol = -1;
-        ClickPosRow = -1;               //默认值
 
         int len = 0;        //误差值
 
@@ -130,10 +138,9 @@ void Window_Play::mousePressEvent(QMouseEvent *event)
                 break;
              }
         }
-        QString gameinfo = gameplatform->getgame()->getinfo().c_str();
-        ui->label->setText(gameinfo);
     }
-
+    QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+    ui->label->setText(gameinfo);
     update();
 }               //鼠标事件函数
 
@@ -154,14 +161,41 @@ void Window_Play::on_pushButton_6_clicked()
 
 void Window_Play::on_pushButton_3_clicked()
 {
-
-    gameplatform->getgame()->regret();
     if(!gameplatform->getgame()->regret())
     {
         QString gameinfo = gameplatform->getgame()->getinfo().c_str();
-        gameinfo += " \n You can't regret now!";
+        gameinfo += " \nYou can't regret now!";
         ui->label->setText(gameinfo);
+        ui->label->repaint();
+    }
+    else
+    {
+        QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+        gameinfo += " \nRegret successful!";
+        ui->label->setText(gameinfo);
+        ui->label->repaint();
     }
     update();
 
 }   //游戏界面中Regret按钮
+
+void Window_Play::on_pushButton_4_clicked()
+{
+    gameplatform->restartGame();
+    msgFirst = false;
+    update();
+}   //游戏界面中Restart按钮
+
+void Window_Play::on_pushButton_clicked()
+{
+    gameplatform->getgame()->saveGame(goGameBase::Json);
+}   //游戏界面中Save按钮
+
+
+
+void Window_Play::on_pushButton_2_clicked()
+{
+    gameplatform->getgame()->loadGame(goGameBase::Json);
+    gameplatform->getgame()->updateMatrixTotal();
+    update();
+}   //游戏界面中Load按钮

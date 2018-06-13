@@ -17,6 +17,7 @@ private:
 public:
     goGamePlatform(){}
     void gameSelect(int myType, int myVsWho); //决定生成游戏的指针
+    void restartGame();
     goGameBase* getgame(){return game;} //获得游戏指针
     ~goGamePlatform(){}
 };

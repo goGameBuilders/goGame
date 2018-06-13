@@ -65,21 +65,90 @@ void goGameBase::updateMatrixTotal(){
 
 void goGameBase::write(QJsonObject &json) const
 {
-    QJsonArray savematrix[size + 1];
-    for(int i = 1; i <= size; i++)
-        for(int j = 1; j <= size; j++)
-            savematrix[i].append(Matrix[i][j]);
-    json["Matrix"] = savematrix[1];
+    QJsonArray save_Path;
+    for(int i = 0; i < xPath.size(); i++)
+    {
+        QJsonObject tmpData;
+        tmpData.insert("x", xPath[i]);
+        tmpData.insert("y", yPath[i]);
+        save_Path.append(tmpData);
+    }
+    json["paths"] = save_Path;
 }       //向json中写入数据
 
 
 void goGameBase::read(const QJsonObject &json)
 {
-
+    xPath.clear();
+    yPath.clear();
+    QJsonArray load_path = json["paths"].toArray();
+    for(int i = 0; i < load_path.size(); i++)
+    {
+        QJsonObject tmpData = load_path[i].toObject();
+        xPath.push_back(tmpData["x"].toInt());
+        yPath.push_back(tmpData["y"].toInt());
+    }
 }      //从json中读取数据
 
 
-void goGameBase::restartGame()
+bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat) const
 {
 
-}
+    QString ttt = "/Users/rubby/desktop/fuckyouqt.txt";
+    QFile tmp(ttt);
+    if(!tmp.open(QFile::WriteOnly | QFile::Text))
+    {
+        qDebug() << "could not open file for writting";
+
+    }
+    tmp.flush();
+    tmp.close();
+
+    QFile saveFile(saveFormat == Json
+              ? QStringLiteral("./save.json")
+              : QStringLiteral("./save.dat"));
+
+          if (!saveFile.open(QIODevice::WriteOnly)) {
+              qWarning("Couldn't open save file.");
+              return false;
+          }
+
+          QJsonObject gameObject;
+          write(gameObject);
+          QJsonDocument saveDoc(gameObject);
+          saveFile.write(saveFormat == Json
+              ? saveDoc.toJson()
+              : saveDoc.toBinaryData());
+          saveFile.flush();
+          saveFile.close();
+          return true;
+
+
+}       //存储游戏存档文件至游戏目录下
+
+bool goGameBase::loadGame(goGameBase::SaveFormat saveFormat)
+{
+    QFile loadFile(saveFormat == Json
+              ? QStringLiteral("save.json")
+              : QStringLiteral("save.dat"));
+
+    if(!loadFile.open(QIODevice::ReadOnly))
+    {
+        qWarning("Couldn't open save file");
+        return false;
+    }
+
+     QByteArray saveData = loadFile.readAll();
+
+     QJsonDocument loadDoc(saveFormat == Json
+               ? QJsonDocument::fromJson(saveData)
+               : QJsonDocument::fromBinaryData(saveData));
+
+    read(loadDoc.object());
+
+    return true;
+}       //读取已存在的存档文件
+
+
+
+

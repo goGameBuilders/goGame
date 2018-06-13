@@ -26,6 +26,12 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::Window_Play *ui;
     goGamePlatform* gameplatform;
@@ -37,9 +43,7 @@ private:
     int ClickPosRow = -1;          //鼠标点击的行数
     int ClickPosCol = -1;          //鼠标点击的列数
 
-    //-------for test------------
-    int borw = 0;
-    //---------------------------
+    bool msgFirst = false;
 
     QPainter *paint;
 };

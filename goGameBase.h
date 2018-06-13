@@ -35,10 +35,9 @@ public:
     void changeMatrix(int x, int y);
 
     bool regret();          //悔棋函数
-    void restartGame();     //重开游戏函数
 
-    bool saveGame()  const;
-    bool loadGame();
+    bool saveGame(goGameBase::SaveFormat saveFormat)  const;
+    bool loadGame(goGameBase::SaveFormat saveFormat);
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
