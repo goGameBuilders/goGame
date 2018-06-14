@@ -188,14 +188,19 @@ void Window_Play::on_pushButton_4_clicked()
 
 void Window_Play::on_pushButton_clicked()
 {
-    gameplatform->getgame()->saveGame(goGameBase::Json);
+    gameplatform->getgame()->saveGame(goGameBase::Binary);
 }   //游戏界面中Save按钮
 
 
 
 void Window_Play::on_pushButton_2_clicked()
 {
-    gameplatform->getgame()->loadGame(goGameBase::Json);
+    gameplatform->getgame()->loadGame(goGameBase::Binary);
     gameplatform->getgame()->updateMatrixTotal();
+
+    QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+    gameinfo += " \nLoad Successful!";
+    ui->label->setText(gameinfo);
+    ui->label->repaint();
     update();
 }   //游戏界面中Load按钮

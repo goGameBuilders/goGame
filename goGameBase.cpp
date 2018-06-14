@@ -66,6 +66,10 @@ void goGameBase::updateMatrixTotal(){
 void goGameBase::write(QJsonObject &json) const
 {
     QJsonArray save_Path;
+    QJsonObject tmpData0;
+    tmpData0.insert("firstPlayer", firstPlayer);
+    tmpData0.insert("totalStep", step);
+    save_Path.append(tmpData0);
     for(int i = 0; i < xPath.size(); i++)
     {
         QJsonObject tmpData;
@@ -82,27 +86,19 @@ void goGameBase::read(const QJsonObject &json)
     xPath.clear();
     yPath.clear();
     QJsonArray load_path = json["paths"].toArray();
-    for(int i = 0; i < load_path.size(); i++)
+    QJsonObject tmpData0 = load_path[0].toObject();
+    firstPlayer = tmpData0["firstPlayer"].toInt();
+    step = 0;
+    for(int i = 1;i < load_path.size(); i++)
     {
         QJsonObject tmpData = load_path[i].toObject();
-        xPath.push_back(tmpData["x"].toInt());
-        yPath.push_back(tmpData["y"].toInt());
+        changeMatrix(tmpData["x"].toInt(),tmpData["y"].toInt());
     }
 }      //从json中读取数据
 
 
 bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat) const
 {
-
-    QString ttt = "/Users/rubby/desktop/fuckyouqt.txt";
-    QFile tmp(ttt);
-    if(!tmp.open(QFile::WriteOnly | QFile::Text))
-    {
-        qDebug() << "could not open file for writting";
-
-    }
-    tmp.flush();
-    tmp.close();
 
     QFile saveFile(saveFormat == Json
               ? QStringLiteral("./save.json")
@@ -129,8 +125,8 @@ bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat) const
 bool goGameBase::loadGame(goGameBase::SaveFormat saveFormat)
 {
     QFile loadFile(saveFormat == Json
-              ? QStringLiteral("save.json")
-              : QStringLiteral("save.dat"));
+              ? QStringLiteral("./save.json")
+              : QStringLiteral("./save.dat"));
 
     if(!loadFile.open(QIODevice::ReadOnly))
     {
@@ -145,7 +141,7 @@ bool goGameBase::loadGame(goGameBase::SaveFormat saveFormat)
                : QJsonDocument::fromBinaryData(saveData));
 
     read(loadDoc.object());
-
+    loadFile.close();
     return true;
 }       //读取已存在的存档文件
 

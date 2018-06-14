@@ -46,17 +46,17 @@ public:
     virtual void updateMatrix(int) {//最后应当是虚函数，输入值应当可变动，防止悔棋重新跑时step是常量导致的黑棋白旗全变成同一种颜色
 	//	Matrix[xPath[step0-1]][yPath[step0-1]] = (step0 + firstPlayer) % 2;
     }
-    inline const int getsize() { return size; }
-    inline const int getstep() { return step; }
-	inline const int getPath(int x, bool which)//提供路径的访问接口（只读）which 为1时返回x 
+    inline  int getsize() { return size; }
+    inline  int getstep() { return step; }
+    inline  int getPath(int x, bool which)//提供路径的访问接口（只读）which 为1时返回x
 	{
 		if (which)
 			return xPath[x];
 		return yPath[x];
 	}
-    inline const int getwhich(int x, int y) { return Matrix[x][y]; } //获得（x，y）处的棋子状态
-	inline const bool getFirstPlayer() { return firstPlayer; }//
-    inline const bool getWhoTurn() { return (firstPlayer + step) % 2; }
+    inline  int getwhich(int x, int y) { return Matrix[x][y]; } //获得（x，y）处的棋子状态
+    inline  bool getFirstPlayer() { return firstPlayer; }//
+    inline  bool getWhoTurn() { return (firstPlayer + step) % 2; }
     inline int getMatrix(int x, int y)
 	{
         return Matrix[x][y];
