@@ -256,6 +256,9 @@ void Window_Play::on_pushButton_6_clicked()
 
 void Window_Play::on_pushButton_3_clicked()
 {
+    bool whetherEnd=false;
+    if(gameplatform->getgame()->isEnd()){whetherEnd=true;}
+
     if(!gameplatform->getgame()->regret())
     {
         QString gameinfo = gameplatform->getgame()->getinfo().c_str();
@@ -317,6 +320,5 @@ void Window_Play::on_pushButton_2_clicked()
         ui->label->setText(gameinfo);
         ui->label->repaint();
     }
-
     update();
 }   //游戏界面中Load按钮
