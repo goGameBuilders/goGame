@@ -18,8 +18,13 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_radioButton_clicked();
+
+    void on_radioButton_2_clicked();
+
 private:
     Ui::Window_Select *ui;
+    int myvsWho = 2; //人机还是人人
     goGamePlatform* gameplatform;
 };
 

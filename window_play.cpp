@@ -121,30 +121,41 @@ void Window_Play::mousePressEvent(QMouseEvent *event)
     }   //if
     if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd()) //点击有效并且没有结束游戏
     {
-        if(gameplatform->getgame()->judge(ClickPosRow, ClickPosCol))
+        if(gameplatform->getgame()->judge(ClickPosRow, ClickPosCol)){
             gameplatform->getgame()->changeMatrix(ClickPosRow,ClickPosCol);
-        if(gameplatform->getgame()->isEnd()){
-            int state = gameplatform->getgame()->isEnd();
-             QMessageBox::StandardButton reply;
-             switch(state){
-            case -1:
-                reply = QMessageBox::information(this, "游戏结束", "黑棋胜利");
-                break;
-            case 1:
-                reply = QMessageBox::information(this, "游戏结束", "白棋胜利");
-                break;
-            case 2:
-                reply = QMessageBox::information(this, "游戏结束", "平局");
-                break;
-             }
+            bool state = IsEnd();
+            if(gameplatform->isPVE()&&!state){
+                int xy = gameplatform->getgameAI()->valueAll();
+                gameplatform->getgame()->changeMatrix(xy/100, xy%100);
+                IsEnd();
+            }
         }
+
     }
     QString gameinfo = gameplatform->getgame()->getinfo().c_str();
     ui->label->setText(gameinfo);
     update();
 }               //鼠标事件函数
 
-
+bool Window_Play::IsEnd(){
+    if(gameplatform->getgame()->isEnd()){
+        int state = gameplatform->getgame()->isEnd();
+         QMessageBox::StandardButton reply;
+         switch(state){
+        case -1:
+            reply = QMessageBox::information(this, "游戏结束", "黑棋胜利");
+            break;
+        case 1:
+            reply = QMessageBox::information(this, "游戏结束", "白棋胜利");
+            break;
+        case 2:
+            reply = QMessageBox::information(this, "游戏结束", "平局");
+            break;
+         }
+         return true;
+    }
+    return false;
+}
 
 
 void Window_Play::on_pushButton_5_clicked()

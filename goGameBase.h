@@ -18,7 +18,7 @@ private:
 	int size;
 	int** Matrix;// 矩阵状态，支持未知大小
 	int step;// 下过的步数
-	bool firstPlayer;
+    bool firstPlayer;//先手是哪方
 	vector <int> xPath;
 	vector <int> yPath;
 protected:
@@ -55,12 +55,14 @@ public:
 		return yPath[x];
 	}
     inline  int getwhich(int x, int y) { return Matrix[x][y]; } //获得（x，y）处的棋子状态
-    inline  bool getFirstPlayer() { return firstPlayer; }//
+    inline  bool getFirstPlayer() {
+        return firstPlayer;
+    }//
     inline  bool getWhoTurn() { return (firstPlayer + step) % 2; }
     inline int getMatrix(int x, int y)
 	{
         return Matrix[x][y];
-    } //绘制矩阵时将数字转换为符号
+    } //获得坐标x，y处的状态。
 
     inline const std::string getinfo(){
         std::string info;
@@ -81,13 +83,13 @@ public:
             info += "Tie!\n";
         return info;
     }
-	inline bool judge(int x, int y)
+    virtual bool judge(int x, int y)
 	{
 		if (x > 0 && x <= size && y > 0 && y <= size && Matrix[x][y] == -1)
 			return true;
 		else
 			return false;
-	};
+    }//默认凡是有空的地方就能下，对于黑白棋和别的棋类需要重载
 	virtual int isEnd()= 0;
 	virtual ~goGameBase() {
 		for (int i = 0; i <= size; i++) {

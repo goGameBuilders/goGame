@@ -22,6 +22,16 @@ void Window_Select::on_pushButton_clicked()
     this->close();
     Window_Play* game = new Window_Play(gameplatform);
     game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
-    gameplatform->gameSelect(1, 2);
+    gameplatform->gameSelect(1, myvsWho);
     game->show();
 }   //Select界面中五子棋按钮
+
+void Window_Select::on_radioButton_clicked()
+{
+    myvsWho = 1;
+}
+
+void Window_Select::on_radioButton_2_clicked()
+{
+    myvsWho = 2;
+}
