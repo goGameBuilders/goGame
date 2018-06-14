@@ -3,7 +3,7 @@
 
 goGameBase::goGameBase() : size(19), step(0) {
 
-		srand((unsigned)time(nullptr));//生成随机数种子
+        std::srand((unsigned)time(nullptr));//生成随机数种子
 		firstPlayer = rand() % 2;//将先手赋随机初值
 		Matrix = new int*[size + 1];
 		for (int i = 0; i <= size; i++)

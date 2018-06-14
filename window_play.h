@@ -18,6 +18,8 @@ public:
     void paintEvent(QPaintEvent *);         //绘图函数声明
     void mousePressEvent(QMouseEvent *event);    //监视鼠标点击情况函数
     void mouseMoveEvent(QMouseEvent *event);    //监视鼠标移动状况函数
+    
+    bool IsEnd();
 
 
 private slots:
