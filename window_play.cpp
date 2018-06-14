@@ -188,19 +188,40 @@ void Window_Play::on_pushButton_4_clicked()
 
 void Window_Play::on_pushButton_clicked()
 {
-    gameplatform->getgame()->saveGame(goGameBase::Binary);
+    QString dir = QFileDialog::getExistingDirectory(this, "Open Directory",
+                               "./", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    gameplatform->getgame()->saveGame(goGameBase::Binary, dir);
+
+    QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+    gameinfo += " \nSave Successful!";
+    ui->label->setText(gameinfo);
+    ui->label->repaint();
+    update();
+
 }   //游戏界面中Save按钮
 
 
 
 void Window_Play::on_pushButton_2_clicked()
 {
-    gameplatform->getgame()->loadGame(goGameBase::Binary);
-    gameplatform->getgame()->updateMatrixTotal();
+    QString dir = QFileDialog::getExistingDirectory(this, "Open Directory",
+                               "./", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    QString gameinfo = gameplatform->getgame()->getinfo().c_str();
-    gameinfo += " \nLoad Successful!";
-    ui->label->setText(gameinfo);
-    ui->label->repaint();
+    if(gameplatform->getgame()->loadGame(goGameBase::Binary, dir))
+    {
+        QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+        gameinfo += " \nLoad Successful!";
+        ui->label->setText(gameinfo);
+        ui->label->repaint();
+        gameplatform->getgame()->updateMatrixTotal();
+    }
+    else
+    {
+        QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+        gameinfo += " \nCan't find the save file in this path!";
+        ui->label->setText(gameinfo);
+        ui->label->repaint();
+    }
+
     update();
 }   //游戏界面中Load按钮

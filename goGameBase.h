@@ -36,8 +36,8 @@ public:
 
     bool regret();          //悔棋函数
 
-    bool saveGame(goGameBase::SaveFormat saveFormat)  const;
-    bool loadGame(goGameBase::SaveFormat saveFormat);
+    bool saveGame(goGameBase::SaveFormat saveFormat, QString path)  const;
+    bool loadGame(goGameBase::SaveFormat saveFormat, QString path);
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;

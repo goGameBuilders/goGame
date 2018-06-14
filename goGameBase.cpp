@@ -97,12 +97,16 @@ void goGameBase::read(const QJsonObject &json)
 }      //从json中读取数据
 
 
-bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat) const
+bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat, QString path) const
 {
+    QString fileName;
+    if(saveFormat == Json)
+        fileName = "save.json";
+    else
+        fileName = "save.dat";
 
-    QFile saveFile(saveFormat == Json
-              ? QStringLiteral("./save.json")
-              : QStringLiteral("./save.dat"));
+
+    QFile saveFile(path + "/" + fileName);
 
           if (!saveFile.open(QIODevice::WriteOnly)) {
               qWarning("Couldn't open save file.");
@@ -122,11 +126,15 @@ bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat) const
 
 }       //存储游戏存档文件至游戏目录下
 
-bool goGameBase::loadGame(goGameBase::SaveFormat saveFormat)
+bool goGameBase::loadGame(goGameBase::SaveFormat saveFormat, QString Path)
 {
-    QFile loadFile(saveFormat == Json
-              ? QStringLiteral("./save.json")
-              : QStringLiteral("./save.dat"));
+    QString fileName;
+    if(saveFormat == Json)
+        fileName = "save.json";
+    else
+        fileName = "save.dat";
+
+    QFile loadFile(Path + "/" + fileName);
 
     if(!loadFile.open(QIODevice::ReadOnly))
     {
