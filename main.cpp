@@ -11,12 +11,14 @@
 #include "window_start.h"
 #include "goGameBase.h"
 #include "difGame.h"
+#include "style.h"
 
 
 int main(int argc, char *argv[])
 {
 
     QApplication a(argc, argv);
+    CommonHelper::setStyle(":/MyStyles/WhiteStyle.qss");       //加载qss样式
     Window_Start* mainwindow = new Window_Start();
     mainwindow->show();
 

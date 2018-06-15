@@ -43,9 +43,14 @@ HEADERS += \
     window_start.h \
     window_select.h \
     window_play.h \
-    goGameNet.h
+    goGameNet.h \
+    style.h
 
 FORMS += \
     window_start.ui \
     window_select.ui \
     window_play.ui
+
+RESOURCES += \
+    mystyle.qrc
+

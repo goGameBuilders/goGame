@@ -7,3 +7,8 @@
 class goGameNet{
 
 };
+
+
+
+
+#endif
