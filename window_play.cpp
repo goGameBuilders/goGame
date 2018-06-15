@@ -32,7 +32,7 @@ void Window_Play::paintEvent(QPaintEvent *)
   paint=new QPainter(this);
   paint->begin(this);//主窗口
   this->setMouseTracking(true);
-
+  paint->setRenderHint(QPainter::Antialiasing, true);   //抗锯齿
 
  if(!msgFirst)
  {
