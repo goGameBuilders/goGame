@@ -24,5 +24,6 @@ public:
     goGameBase* getgame(){return game;} //获得游戏指针
     goGameAIBase* getgameAI(){return gameAI;}//获得游戏AI的指针
     bool isPVE(){return vsWho-2;}//若vsAI则返回true
+    int getType(){return type;}//获取游戏种类
     ~goGamePlatform(){}
 };

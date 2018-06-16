@@ -41,54 +41,7 @@ void Window_Play::paintEvent(QPaintEvent *)
      msgFirst = true;
  }
 
-  paint->setPen(QPen(Qt::darkMagenta,2,Qt::SolidLine));//钢笔工具：颜色，线号，实线
-  //画SIZE+1条横线
-  for(int i=1;i<SIZE+1;i++)
-    {
-      paint->drawLine(margin_x+block_size,margin_y+(block_size)*i,margin_x+(block_size)*(SIZE),margin_y+(block_size)*i);//画线函数：x1,y1,x2,y2:画从(x1,y1)到(x2,y2)的线
-    }
-  //画SIZE+1条竖线
-  for(int i=1;i<SIZE+1;i++)
-    {
-      paint->drawLine(margin_x+(block_size)*i,margin_y+block_size,margin_x+(block_size)*i,margin_y+(block_size)*(SIZE));
-    }
-  QBrush brush;
-  brush.setStyle(Qt::SolidPattern);
-
-  // 绘制落子标记
-     if (nowPosCol > 0 && nowPosRow <= SIZE &&
-         nowPosRow > 0 && nowPosCol <= SIZE &&
-         gameplatform->getgame()->getMatrix(nowPosRow, nowPosCol) == -1)
-     {
-         if (gameplatform->getgame()->getWhoTurn())
-             brush.setColor(QColor(0, 0, 0, 150));
-         else
-             brush.setColor(QColor(255, 255, 255, 150));
-
-         paint->setBrush(brush);
-
-         if(isPointed)
-            paint->drawEllipse(margin_x + nowPosCol * block_size - block_size/4,margin_y + nowPosRow * block_size - block_size/4,block_size/2,block_size/2);
-         else
-            paint->drawEllipse(nowPosx_accurate - block_size/4,nowPosy_accurate - block_size/4,block_size/2,block_size/2);
-     }
-
-
-
-  for(int i = 1; i <=SIZE; i ++)
-    for(int j = 1; j <=SIZE; j ++)
-    {
-        if(gameplatform->getgame()->getMatrix(i, j)==0){
-            brush.setColor(QColor(0, 0, 0, 255));
-            paint->setBrush(brush);
-            paint->drawEllipse(margin_x + j * block_size - block_size/4,margin_y + i * block_size - block_size/4,block_size/2,block_size/2); //画椭圆：中心点X,Y,宽度，高度
-        }
-        else if(gameplatform->getgame()->getMatrix(i, j)==1){
-            brush.setColor(QColor(255, 255, 255, 255));
-            paint->setBrush(brush);
-            paint->drawEllipse(margin_x + j * block_size - block_size/4,margin_y + i * block_size - block_size/4,block_size/2,block_size/2); //画椭圆：中心点X,Y,宽度，高度
-        }
-    }
+ myPaint(paint, 3);
 
   paint->end();
 
@@ -244,7 +197,14 @@ bool Window_Play::IsEnd(){
 
 void Window_Play::on_pushButton_5_clicked()
 {
-    this->close();
+    QMessageBox::StandardButton reply;
+
+      reply = QMessageBox::question(this,
+                            "My Title",
+                              "Do you really want to quit?",
+                            QMessageBox::No | QMessageBox::Yes);
+      if(reply == QMessageBox::Yes)
+          this->close();
 }       //游戏界面中Exit Game 按钮
 
 void Window_Play::on_pushButton_6_clicked()
@@ -302,8 +262,9 @@ void Window_Play::on_pushButton_clicked()
 
 void Window_Play::on_pushButton_2_clicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, "Open Directory",
-                               "./", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    QString dir = QFileDialog::getOpenFileName(this, "Open Directory",
+                               "./","Saves(*.dat)");        //只可以打开dat文件
 
     if(gameplatform->getgame()->loadGame(goGameBase::Binary, dir))
     {
@@ -322,3 +283,118 @@ void Window_Play::on_pushButton_2_clicked()
     }
     update();
 }   //游戏界面中Load按钮
+
+
+void Window_Play::myPaint(QPainter *paint, int gameType)
+{
+    if(gameType == 1 || gameType == 2)
+    {
+        paint->setPen(QPen(Qt::darkMagenta,2,Qt::SolidLine));//钢笔工具：颜色，线号，实线
+        //画SIZE+1条横线
+        for(int i=1;i<SIZE+1;i++)
+          {
+            paint->drawLine(margin_x+block_size,margin_y+(block_size)*i,margin_x+(block_size)*(SIZE),margin_y+(block_size)*i);//画线函数：x1,y1,x2,y2:画从(x1,y1)到(x2,y2)的线
+          }
+        //画SIZE+1条竖线
+        for(int i=1;i<SIZE+1;i++)
+          {
+            paint->drawLine(margin_x+(block_size)*i,margin_y+block_size,margin_x+(block_size)*i,margin_y+(block_size)*(SIZE));
+          }
+        QBrush brush;
+        brush.setStyle(Qt::SolidPattern);
+
+        // 绘制落子标记
+           if (nowPosCol > 0 && nowPosRow <= SIZE &&
+               nowPosRow > 0 && nowPosCol <= SIZE &&
+               gameplatform->getgame()->getMatrix(nowPosRow, nowPosCol) == -1)
+           {
+               if (gameplatform->getgame()->getWhoTurn())
+                   brush.setColor(QColor(0, 0, 0, 150));
+               else
+                   brush.setColor(QColor(255, 255, 255, 150));
+
+               paint->setBrush(brush);
+
+               if(isPointed)
+                  paint->drawEllipse(margin_x + nowPosCol * block_size - block_size/4,margin_y + nowPosRow * block_size - block_size/4,block_size/2,block_size/2);
+               else
+                  paint->drawEllipse(nowPosx_accurate - block_size/4,nowPosy_accurate - block_size/4,block_size/2,block_size/2);
+           }
+
+
+
+        for(int i = 1; i <=SIZE; i ++)
+          for(int j = 1; j <=SIZE; j ++)
+          {
+              if(gameplatform->getgame()->getMatrix(i, j)==0){
+                  brush.setColor(QColor(0, 0, 0, 255));
+                  paint->setBrush(brush);
+                  paint->drawEllipse(margin_x + j * block_size - block_size/4,margin_y + i * block_size - block_size/4,block_size/2,block_size/2); //画椭圆：中心点X,Y,宽度，高度
+              }
+              else if(gameplatform->getgame()->getMatrix(i, j)==1){
+                  brush.setColor(QColor(255, 255, 255, 255));
+                  paint->setBrush(brush);
+                  paint->drawEllipse(margin_x + j * block_size - block_size/4,margin_y + i * block_size - block_size/4,block_size/2,block_size/2); //画椭圆：中心点X,Y,宽度，高度
+              }
+          }
+    }//if                   //五子棋、围棋绘图函数
+
+    if(gameType == 3)
+    {
+        paint->setPen(QPen(Qt::darkMagenta,2,Qt::SolidLine));//钢笔工具：颜色，线号，实线
+        //画SIZE+1条横线
+        for(int i=1;i<SIZE+1;i++)
+          {
+            paint->drawLine(margin_x+block_size - block_size/2,margin_y+(block_size)*i - block_size/2, margin_x+(block_size)*(SIZE) - block_size/2, margin_y+(block_size)*i - block_size/2);//画线函数：x1,y1,x2,y2:画从(x1,y1)到(x2,y2)的线
+          }
+        //画SIZE+1条竖线
+        for(int i=1;i<SIZE+1;i++)
+          {
+            paint->drawLine(margin_x+(block_size)*i - block_size/2, margin_y+block_size - block_size/2, margin_x+(block_size)*i - block_size/2 ,margin_y+(block_size)*(SIZE) - block_size/2);
+          }
+        QBrush brush;
+        brush.setStyle(Qt::SolidPattern);
+
+        // 绘制落子标记
+
+           if (nowPosCol > 0 && nowPosRow <= SIZE &&
+               nowPosRow > 0 && nowPosCol <= SIZE &&
+               gameplatform->getgame()->getMatrix(nowPosRow, nowPosCol) == -1)
+           {
+               if (gameplatform->getgame()->getWhoTurn())
+                   brush.setColor(QColor(0, 0, 0, 150));
+               else
+                   brush.setColor(QColor(255, 255, 255, 150));
+
+               paint->setBrush(brush);
+
+               if(isPointed)
+                  paint->drawEllipse(margin_x + nowPosCol * block_size - block_size/4,margin_y + nowPosRow * block_size - block_size/4,block_size/2,block_size/2);
+               else
+                  paint->drawEllipse(nowPosx_accurate - block_size/4,nowPosy_accurate - block_size/4,block_size/2,block_size/2);
+           }
+                              //需要逻辑层面上改动一下。。。
+
+
+        for(int i = 1; i <=SIZE; i ++)
+          for(int j = 1; j <=SIZE; j ++)
+          {
+              if(gameplatform->getgame()->getMatrix(i, j)==0){
+                  brush.setColor(QColor(0, 0, 0, 255));
+                  paint->setBrush(brush);
+                  paint->drawEllipse(margin_x + j * block_size - block_size * 3 / 8,margin_y + i * block_size - block_size * 3 / 8,block_size*3 / 4,block_size*3 / 4); //画椭圆：中心点X,Y,宽度，高度
+              }
+              else if(gameplatform->getgame()->getMatrix(i, j)==1){
+                  brush.setColor(QColor(255, 255, 255, 255));
+                  paint->setBrush(brush);
+                  paint->drawEllipse(margin_x + j * block_size - block_size * 3 / 8,margin_y + i * block_size - block_size * 3 / 8,block_size* 3 / 4,block_size * 3 / 4); //画椭圆：中心点X,Y,宽度，高度
+              }
+          }
+    }
+
+
+}
+
+
+
+

@@ -129,4 +129,8 @@
         <file>White/upButton.png</file>
         <file>White/warning.png</file>
     </qresource>
+    <qresource prefix="/MyChessPng">
+        <file>ChessForReversi/BlackForReversi.png</file>
+        <file>ChessForReversi/WhiteForReversi.png</file>
+    </qresource>
 </RCC>

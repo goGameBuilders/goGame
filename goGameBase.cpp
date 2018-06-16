@@ -134,7 +134,7 @@ bool goGameBase::loadGame(goGameBase::SaveFormat saveFormat, QString Path)
     else
         fileName = "save.dat";
 
-    QFile loadFile(Path + "/" + fileName);
+    QFile loadFile(Path);
 
     if(!loadFile.open(QIODevice::ReadOnly))
     {
