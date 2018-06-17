@@ -130,7 +130,8 @@
         <file>White/warning.png</file>
     </qresource>
     <qresource prefix="/MyChessPng">
-        <file>ChessForReversi/BlackForReversi.png</file>
-        <file>ChessForReversi/WhiteForReversi.png</file>
+        <file>ResourcesForReversi/ReversiBlack.png</file>
+        <file>ResourcesForReversi/ReversiBoard.png</file>
+        <file>ResourcesForReversi/ReversiWhite.png</file>
     </qresource>
 </RCC>
