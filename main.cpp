@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 //    p.setPen(QPen(Qt::darkMagenta,3,Qt::SolidLine));//钢笔工具：颜色，线号，实线
 //    QBrush brush;
 //    brush.setStyle(Qt::SolidPattern);
-//    brush.setColor(Qt::white);
+//    brush.setColor(QColor(255, 255, 255, 150));
 //    p.setBrush(brush);
 //    p.drawEllipse(5, 5, 40, 40);
 //    pixmap.save("yourIamgeFile", "png");

@@ -19,7 +19,7 @@
      <x>40</x>
      <y>50</y>
      <width>421</width>
-     <height>91</height>
+     <height>141</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -49,10 +49,10 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>43</x>
-     <y>190</y>
-     <width>411</width>
-     <height>51</height>
+     <x>10</x>
+     <y>199</y>
+     <width>491</width>
+     <height>91</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -80,7 +80,14 @@
     <item>
      <widget class="QRadioButton" name="radioButton_3">
       <property name="text">
-       <string>PVP(网络）</string>
+       <string>PVP(网络主机)</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="radioButton_4">
+      <property name="text">
+       <string>PVP((网络子机)</string>
       </property>
      </widget>
     </item>
