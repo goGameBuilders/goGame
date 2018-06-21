@@ -39,18 +39,12 @@ Window_Play::Window_Play(goGamePlatform* _gameplatform, int gameType, QWidget *p
         block_size = 50;
         margin_x = 50;
         margin_y = 50;
-        mouse_delta = 10;
+        mouse_delta = 40;
         QPixmapCache::setCacheLimit(1);  //设置图片缓冲区最大容量
     }
 
 
-    //--------------For Animation-------------------//
-    ani = new QPropertyAnimation(this,"transformY",this);
-    ani->setDuration(3000);
-    ani->setStartValue(0);
-    ani->setEndValue(180);
-    ani->setEasingCurve(QEasingCurve::InCurve);
-    connect(ani,&QPropertyAnimation::finished,[&]{ani->setDirection(QPropertyAnimation::Direction(!ani->direction()));});
+
 }
 
 Window_Play::~Window_Play()
@@ -65,7 +59,7 @@ void Window_Play::paintEvent(QPaintEvent *)
   this->setMouseTracking(true);
   paint->setRenderHint(QPainter::Antialiasing, true);   //抗锯齿
 
- myPaint(paint, 1);
+ myPaint(paint, 3);
 
 
   paint->end();
@@ -75,14 +69,14 @@ void Window_Play::paintEvent(QPaintEvent *)
 
 void Window_Play::mousePressEvent(QMouseEvent *event)
 {
-    myMousePress(event, 1);
+    myMousePress(event, 3);
 }               //鼠标点击事件函数
 
 
 void Window_Play::mouseMoveEvent(QMouseEvent *event)
 {
 
-    myMouseMove(event, 1);
+    myMouseMove(event, 3);
 }
 
 
@@ -270,7 +264,7 @@ void Window_Play::myPaint(QPainter *paint, int gameType)
             ui->label_reversiboard->show(); //绘制棋盘
             for(int i = 0; i <= SIZE; i++)
                 for(int j = 0; j <=SIZE; j++)
-                    if(chessPoint[i][j] == nullptr)
+                    if(chessPoint[i][j] != nullptr)
                         delete chessPoint[i][j];
             for(int i = 0; i < SIZE - 1; i++)
                 for(int j = 0; j< SIZE - 1; j++)
@@ -283,32 +277,16 @@ void Window_Play::myPaint(QPainter *paint, int gameType)
                 }
         }               //以上为第一次初始化发生的事件
 
-//        // 绘制落子标记
-//           if (nowPosCol > 0 && nowPosRow <= SIZE &&
-//               nowPosRow > 0 && nowPosCol <= SIZE &&
-//               gameplatform->getgame()->getMatrix(nowPosRow, nowPosCol) == -1)
-//           {
-//               QPixmap tmpPix;
-//               if (gameplatform->getgame()->getWhoTurn())
-//                   tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiBlack_Trans.png");
-//               else
-//                   tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiWhite_Trans.png");
-
-//               chessPoint[nowPosRow][nowPosCol]->setPixmap(tmpPix);
-
-//               if(isPointed)
-//                  chessPoint[nowPosRow][nowPosCol]->show();
-//           }
-
 
        //绘制落子标记
-        if(nowPosCol > 0 && nowPosRow <= SIZE - 1 &&
-           nowPosRow > 0 && nowPosCol <= SIZE - 1)
+        if(nowPosCol >= 0 && nowPosRow <= SIZE - 2 &&
+           nowPosRow >= 0 && nowPosCol <= SIZE - 2 &&
+          gameplatform->getgame()->getMatrix(nowPosCol + 1, nowPosRow + 1) == -1)
         {
             for(int i = 0; i < SIZE - 1; i++)
                 for(int j = 0; j < SIZE - 1; j++)
                 {
-                    if(i == nowPosRow && j == nowPosCol)
+                    if(i == nowPosCol && j == nowPosRow)
                     {
                         QPixmap tmpPix;
                         if (gameplatform->getgame()->getWhoTurn())
@@ -317,20 +295,44 @@ void Window_Play::myPaint(QPainter *paint, int gameType)
                             tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiWhite_Trans.png");
                        if(isPointed)
                         {
-                           chessPoint[nowPosRow][nowPosCol]->setPixmap(tmpPix);
+                           chessPoint[nowPosCol][nowPosRow]->setPixmap(tmpPix);
                            continue;
                         }
                        else
-                        continue;
+                       {
+                            chessPoint[i][j]->clear();
+                       }
                     }
                     else
                     {
                         chessPoint[i][j]->clear();
                     }
                 }
-        }
+        }                       //结束绘制落子标记
 
 
+        //绘制棋子
+
+        for(int i = 0; i < SIZE - 1; i ++)
+          for(int j = 0; j < SIZE - 1; j ++)
+          {
+              QPixmap tmpPix;
+              if(gameplatform->getgame()->getMatrix(i + 1, j + 1)==0){
+                  tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiBlack.png");
+                  chessPoint[i][j]->setPixmap(tmpPix);
+              }
+              else if(gameplatform->getgame()->getMatrix(i + 1, j + 1)==1){
+                  tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiWhite.png");
+                  chessPoint[i][j]->setPixmap(tmpPix);
+              }
+              else
+              {
+                  if(i == nowTrans[0] && j == nowTrans[1])
+                      continue;
+                  chessPoint[i][j]->clear();
+              }
+
+          }
 
 
     }
@@ -404,7 +406,40 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
 
     if(gameType == 3)
     {
+        ClickPosCol = -1;
+        ClickPosRow = -1;               //默认值
 
+        int tmpx = event->pos().x();
+        int tmpy = event->pos().y();
+        if(tmpx >= margin_x - mouse_delta && tmpx < margin_x + (block_size) * (SIZE -1 - 1/2)
+        && tmpy >= margin_y - mouse_delta && tmpy < margin_y + (block_size) * (SIZE - 1 - 1/2) )        //棋盘边界判断
+        {
+            int col = (tmpx - margin_x) / block_size;
+            int row = (tmpy - margin_y) / block_size;        //获取离点击点最近的棋盘点坐标(左上角)
+            int cenx = margin_x + block_size / 2 + block_size * col;
+            int ceny = margin_y + block_size / 2 + block_size * row;
+            if(sqrt((cenx - tmpx) * (cenx - tmpx) + (ceny - tmpy)*(ceny - tmpy)) < mouse_delta)
+            {
+                ClickPosCol = col;
+                ClickPosRow = row;
+            }
+        }   //if
+        if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd()) //点击有效并且没有结束游戏
+        {
+            if(gameplatform->getgame()->judge(ClickPosCol + 1, ClickPosRow + 1)){
+                gameplatform->getgame()->changeMatrix(ClickPosCol + 1,ClickPosRow + 1);
+                bool state = IsEnd();
+                if(gameplatform->isPVE()&&!state){
+                    int xy = gameplatform->getgameAI()->valueAll();
+                    gameplatform->getgame()->changeMatrix(xy/100, xy%100);
+                    IsEnd();
+                }
+            }
+
+        }
+        QString gameinfo = gameplatform->getgame()->getinfo().c_str();
+        ui->label->setText(gameinfo);
+        update();
     }   //黑白棋鼠标按下函数
 
 
@@ -483,52 +518,28 @@ void Window_Play::myMouseMove(QMouseEvent *event, int gameType)
         nowPosx_accurate = event->pos().x();
         nowPosy_accurate = event->pos().y();
         isPointed = false;
-        if(tmpx >= margin_x + block_size / 2 && tmpx < margin_x + (block_size) * (SIZE - 1/2)
-        && tmpy >= margin_y + block_size / 2 && tmpy < margin_y + (block_size) * (SIZE - 1/2) )        //棋盘边界判断
+        if(tmpx >= margin_x - mouse_delta && tmpx < margin_x + (block_size) * (SIZE -1 - 1/2)
+        && tmpy >= margin_y - mouse_delta && tmpy < margin_y + (block_size) * (SIZE - 1 - 1/2) )        //棋盘边界判断
         {
             int col = (tmpx - margin_x) / block_size;
-            int row = (tmpy - margin_y) / block_size;        //获取离点击点最近的棋盘点坐标(左上角)
-
-            int leftTopx = margin_x + block_size * col;
-            int leftTopy = margin_y + block_size * row; //获取左上角真实坐标
-
-
-            int len = 0;        //误差值
-
-
-            len = sqrt((tmpx - leftTopx) * (tmpx - leftTopx) + (tmpy - leftTopy) * (tmpy - leftTopy));
-                   if (len < mouse_delta)
-                   {
-                       nowPosRow = row;
-                       nowPosCol = col;
-                       isPointed = true;
-                   }
-                   len = sqrt((tmpx - leftTopx - block_size) * (tmpx - leftTopx - block_size) + (tmpy - leftTopy) * (tmpy - leftTopy));
-                   if (len < mouse_delta)
-                   {
-                       nowPosRow = row;
-                       nowPosCol = col + 1;
-                       isPointed = true;
-                   }
-                   len = sqrt((tmpx - leftTopx) * (tmpx - leftTopx) + (tmpy - leftTopy - block_size) * (tmpy - leftTopy - block_size));
-                   if (len < mouse_delta)
-                   {
-                       nowPosRow = row + 1;
-                       nowPosCol = col;
-                       isPointed = true;
-                   }
-                   len = sqrt((tmpx - leftTopx - block_size) * (tmpx - leftTopx - block_size) + (tmpy - leftTopy - block_size) * (tmpy - leftTopy - block_size));
-                   if (len < mouse_delta)
-                   {
-                       nowPosRow = row + 1;
-                       nowPosCol = col + 1;
-                       isPointed = true;
-                   }
+            int row = (tmpy - margin_y) / block_size;
+            int cenx = margin_x + block_size / 2 + block_size * col;
+            int ceny = margin_y + block_size / 2 + block_size * row;
+            if(sqrt((cenx - tmpx) * (cenx - tmpx) + (ceny - tmpy)*(ceny - tmpy)) < mouse_delta)
+            {
+                nowPosCol = col;
+                nowPosRow = row;
+                nowTrans[0] = col;
+                nowTrans[1] = row;
+                isPointed = true;
+            }
 
         }   //if
 
         else
         {
+            nowTrans[0] = -1;
+            nowTrans[1] = -1;
             nowPosRow = -1;
             nowPosCol = -1;
         }
@@ -543,78 +554,6 @@ void Window_Play::myMouseMove(QMouseEvent *event, int gameType)
 
 
 
-
-
-
-//---------------For Animation------------------------------//
-inline void Window_Play::setFront(QPixmap front)
-{
-    if(!front)
-        return ;
-    aniMap["front"] = front;    //添加前面图片部分
-}
-
-inline void Window_Play::setBack(QPixmap back)
-{
-    if(!back)
-        return ;
-    aniMap["back"] = back;     //添加后面图片部分
-}
-
-void Window_Play::setTransformY(qreal angle)
-{
-    if(aniMap.count() != 2)
-    {
-        QMessageBox::information(this, "Error!", "Something does not work well with the animation effect, please contact the devolper::heguande17@163.com");
-        return ;
-    }
-
-    if(angle != _angle)
-        emit transformYChanged();
-    _angle = angle;
-    update();
-}
-
-qreal Window_Play::transformY() const
-{
-    return _angle;
-}
-
-void Window_Play:: myAnimationPaint()
-{
-
-    if(_angle > 90)
-    {
-        aniPng = aniMap.value("back");
-    }
-    else
-    {
-        aniPng = aniMap.value("front");
-    }
-
-   // anipaint = new QPainter(this);
-    QTransform fm;
-    fm.translate(aniPng.width() >> 1, 0);
-    fm.rotate(_angle, Qt::YAxis);
-    fm.translate(-aniPng.width() >> 1, 0);
-//    anipaint->setTransform(fm);
-//    anipaint->drawPixmap(10, 10, 40, 40, aniPng);
-    update();
-}
-
-void Window_Play::start()
-{
-    ani->start();
-}
-
-void Window_Play::setMyAnimation()
-{
-    setFront(QPixmap(":/MyChessPng/ChessForReversi/BlackForReversi.png"));
-    setBack(QPixmap(":/MyChessPng/ChessForReversi/WhiteForReversi.png"));
-    tm.setInterval(3500);
-    QObject::connect(&tm, &QTimer::timeout, [&]{this->start();});
-    tm.start();
-}
 
 
 

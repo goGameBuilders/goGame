@@ -21,7 +21,7 @@ void Window_Select::on_pushButton_clicked()
 {
     this->close();
     gameplatform->gameSelect(1, myvsWho);
-    Window_Play* game = new Window_Play(gameplatform, 1);
+    Window_Play* game = new Window_Play(gameplatform, 3);
     game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
     game->show();
 }   //Select界面中五子棋按钮
