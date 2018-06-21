@@ -32,8 +32,7 @@ SOURCES += \
         goGamePlatform.cpp \
     window_start.cpp \
     window_select.cpp \
-    window_play.cpp \
-    goGameNet.cpp
+    window_play.cpp
 HEADERS += \
         difAI.h \
         difGame.h \
@@ -43,7 +42,6 @@ HEADERS += \
     window_start.h \
     window_select.h \
     window_play.h \
-    goGameNet.h \
     style.h
 
 FORMS += \

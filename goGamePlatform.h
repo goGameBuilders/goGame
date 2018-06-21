@@ -4,7 +4,6 @@
 #include "goGameAIBase.h"
 #include "difGame.h"
 #include "difAI.h"
-#include "goGameNet.h"
 #include <string>
 
 using namespace std;
@@ -16,7 +15,6 @@ private:
     int vsWho;      // 1 人机 2 人人  3 联网对战
     goGameBase *game = nullptr; //游戏基类指针
     goGameAIBase *gameAI = nullptr; //游戏AI类指针
-    goGameNet *net; //通信类指针
 public:
     goGamePlatform(){}
     void gameSelect(int myType, int myVsWho); //决定生成游戏的指针
