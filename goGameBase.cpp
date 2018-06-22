@@ -30,10 +30,25 @@ goGameBase::goGameBase(int mySize) : size(mySize), step(0) {
 }
 
 void goGameBase::changeMatrix(int x, int y) {
+    static int sum = 0;
 	xPath.push_back(x);
 	yPath.push_back(y);
 	step++;
 	updateMatrix(step);
+    int sum1 = 0,sum2=0;
+    for(int i = 1; i <=size; i ++)
+        for(int j = 1; j<=size;j++)
+           {
+            if(judge(i, j))
+                ++sum1;
+            if(Matrix[i][j]==-1)
+                ++sum2;
+            }
+    if(sum1==0&&sum2>0&&sum==0){
+        sum++;
+        changeMatrix(0,0);
+    }
+    sum = 0;
 }
 
 bool goGameBase::regret() {
@@ -87,12 +102,13 @@ void goGameBase::read(const QJsonObject &json)
     QJsonArray load_path = json["paths"].toArray();
     QJsonObject tmpData0 = load_path[0].toObject();
     firstPlayer = true;
-    step = 0;
-    InitMatrix();
+    step = tmpData0["totalStep"].toInt();
     for(int i = 1;i < load_path.size(); i++)
     {
         QJsonObject tmpData = load_path[i].toObject();
-        changeMatrix(tmpData["x"].toInt(),tmpData["y"].toInt());
+        //changeMatrix(tmpData["x"].toInt(),tmpData["y"].toInt());
+        xPath.push_back(tmpData["x"].toInt());
+        yPath.push_back(tmpData["y"].toInt());
     }
 }      //从json中读取数据
 

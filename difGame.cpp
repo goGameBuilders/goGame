@@ -209,8 +209,8 @@ void Reversi::updateMatrix(int step0){
         }
     }
 }
-bool Reversi::judge(int x, int y){
-    bool Me = (getWhoTurn()+1)%2;
+bool Reversi::judge(int x, int y,bool swit = false){
+    bool Me = (getWhoTurn()+1+swit)%2;
     if (x > 0 && x <= getsize() && y > 0 && y <= getsize() && getMatrix(x, y) == -1)
     {
         int sum=0;
@@ -316,13 +316,31 @@ bool Reversi::judge(int x, int y){
     return false;
 }
 int Reversi::isEnd(){
-    if(getWhite()+getBlack()==getsize()*getsize())
+    if(getstep()==getsize()*getsize()-4)
     {   if(getWhite()>getBlack())
             return 1;
         else if(getWhite()<getBlack())
             return -1;
         else
             return 2;
+    }
+    int sum = 0;
+    for(int i = 1; i <=getsize(); i ++)
+        for(int j = 1; j<=getsize();j++)
+           {
+            if(judge(i, j))
+                ++sum;
+            else if(judge(i, j, true))
+                ++sum;
+            }
+    if(sum==0)
+    {
+        if(getWhite()>getBlack())
+                    return 1;
+                else if(getWhite()<getBlack())
+                    return -1;
+                else
+                    return 2;
     }
     return 0;
 }

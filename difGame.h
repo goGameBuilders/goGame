@@ -22,7 +22,7 @@ public:
       Reversi(int size);
       virtual void updateMatrix(int step0);
       virtual int isEnd();
-      virtual bool judge(int x, int y);
+      virtual bool judge(int x, int y, bool swit );
       virtual void InitMatrix();
       ~Reversi(){}
 };
