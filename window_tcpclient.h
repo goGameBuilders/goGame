@@ -12,11 +12,15 @@ class Window_TCPClient : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Window_TCPClient(QWidget *parent = 0);
+    explicit Window_TCPClient(QWidget *parent = 0, int _gameType);
     ~Window_TCPClient();
+
+private slots:
+    void on_pushButton_Back_clicked();
 
 private:
     Ui::Window_TCPClient *ui;
+    int gameType;
 };
 
 #endif // WINDOW_TCPCLIENT_H

@@ -57,3 +57,10 @@ void Window_Select::on_radioButton_4_clicked()
 {
     myvsWho = 4;
 }   //Select界面中PVP(网络子机)按钮
+
+
+
+void Window_Select::OpenNetWorkWindow(int GameType)
+{
+
+}

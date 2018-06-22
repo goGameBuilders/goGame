@@ -7,54 +7,76 @@
     <x>0</x>
     <y>0</y>
     <width>420</width>
-    <height>278</height>
+    <height>239</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QPushButton" name="pushButton_Connect">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>121</width>
-      <height>91</height>
+      <x>240</x>
+      <y>180</y>
+      <width>131</width>
+      <height>41</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="label_IP">
-       <property name="text">
-        <string>服务器IP地址：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_Port">
-       <property name="text">
-        <string>服务器端口：</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="text">
+     <string>Connect</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Back">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>180</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back</string>
+    </property>
    </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>20</y>
-      <width>231</width>
-      <height>81</height>
+      <x>10</x>
+      <y>40</y>
+      <width>401</width>
+      <height>110</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="lineEdit_IP"/>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_IP">
+         <property name="text">
+          <string>服务器IP地址：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_Port">
+         <property name="text">
+          <string>服务器端口：</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_Port"/>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_IP"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_Port"/>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
