@@ -9,3 +9,9 @@ public:
     FIRAI(goGameBase* _game):goGameAIBase(_game){}
     virtual int value(int, int);
 };
+
+class ReversiAI:public goGameAIBase{
+public:
+    ReversiAI(goGameBase* _game):goGameAIBase(_game){}
+    virtual int value(int , int);
+};

@@ -70,7 +70,6 @@ void Reversi::updateMatrix(int step0){
     bool Me = (step0+1) % 2; //还需确定敌我双方问题
     int sum = 0;
     if(x!=0&&y!=0){
-        skipnumber = 0;
         touchMatrix(x, y, Me);
         for(int i = x+1; i <=getsize(); i++)
         {
