@@ -32,7 +32,9 @@ SOURCES += \
         goGamePlatform.cpp \
     window_start.cpp \
     window_select.cpp \
-    window_play.cpp
+    window_play.cpp \
+    tcpclient.cpp \
+    tcpserver.cpp
 HEADERS += \
         difAI.h \
         difGame.h \
@@ -42,12 +44,16 @@ HEADERS += \
     window_start.h \
     window_select.h \
     window_play.h \
-    style.h
+    style.h \
+    tcpclient.h \
+    tcpserver.h
 
 FORMS += \
     window_start.ui \
     window_select.ui \
-    window_play.ui
+    window_play.ui \
+    tcpclient.ui \
+    tcpserver.ui
 
 RESOURCES += \
     mystyle.qrc
