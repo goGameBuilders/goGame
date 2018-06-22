@@ -22,6 +22,8 @@ private slots:
 
     void on_radioButton_2_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Window_Select *ui;
     int myvsWho = 2; //人机还是人人

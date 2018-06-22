@@ -41,6 +41,9 @@ Window_Play::Window_Play(goGamePlatform* _gameplatform, int gameType, QWidget *p
         margin_y = 50;
         mouse_delta = 40;
         QPixmapCache::setCacheLimit(1);  //设置图片缓冲区最大容量
+        for(int i = 0; i <=SIZE; i ++)
+            for(int j = 0; j <= SIZE; j++)
+                chessPoint[i][j] = nullptr;
     }
 
 
@@ -59,7 +62,7 @@ void Window_Play::paintEvent(QPaintEvent *)
   this->setMouseTracking(true);
   paint->setRenderHint(QPainter::Antialiasing, true);   //抗锯齿
 
- myPaint(paint, 3);
+ myPaint(paint, gameplatform->getType());
 
 
   paint->end();
@@ -69,14 +72,14 @@ void Window_Play::paintEvent(QPaintEvent *)
 
 void Window_Play::mousePressEvent(QMouseEvent *event)
 {
-    myMousePress(event, 3);
+    myMousePress(event, gameplatform->getType());
 }               //鼠标点击事件函数
 
 
 void Window_Play::mouseMoveEvent(QMouseEvent *event)
 {
 
-    myMouseMove(event, 3);
+    myMouseMove(event, gameplatform->getType());
 }
 
 
@@ -262,8 +265,8 @@ void Window_Play::myPaint(QPainter *paint, int gameType)
             msgFirst = true;
             ui->label_reversiboard->setPixmap(QPixmap(":/MyChessPng/ResourcesForReversi/ReversiBoard.png"));
             ui->label_reversiboard->show(); //绘制棋盘
-            for(int i = 0; i <= SIZE; i++)
-                for(int j = 0; j <=SIZE; j++)
+            for(int i = 0; i < SIZE; i++)
+                for(int j = 0; j <SIZE; j++)
                     if(chessPoint[i][j] != nullptr)
                         delete chessPoint[i][j];
             for(int i = 0; i < SIZE - 1; i++)

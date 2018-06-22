@@ -15,11 +15,14 @@ public:
 };
 //其他自定义棋类游戏
 class Reversi :public goGameBase {
+private:
+    int skipnumber=0;
 public:
       Reversi();
       Reversi(int size);
       virtual void updateMatrix(int step0);
       virtual int isEnd();
       virtual bool judge(int x, int y);
+      virtual void InitMatrix();
       ~Reversi(){}
 };

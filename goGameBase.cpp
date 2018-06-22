@@ -3,7 +3,7 @@
 
 goGameBase::goGameBase() : size(19), step(0) {
 
-        firstPlayer = 0;
+        firstPlayer = 1;
 		Matrix = new int*[size + 1];
 		for (int i = 0; i <= size; i++)
 		{
@@ -17,8 +17,7 @@ goGameBase::goGameBase() : size(19), step(0) {
 
 goGameBase::goGameBase(int mySize) : size(mySize), step(0) {
 
-    firstPlayer = 0;
-	firstPlayer = rand() % 2;//将先手赋随机初值
+    firstPlayer = 1;
 	Matrix = new int*[size + 1];
 	for (int i = 0; i <= size; i++)
 	{
@@ -27,7 +26,7 @@ goGameBase::goGameBase(int mySize) : size(mySize), step(0) {
 		{
 			Matrix[i][j] = -1;
 		}
-	}
+    }
 }
 
 void goGameBase::changeMatrix(int x, int y) {
@@ -56,6 +55,7 @@ void goGameBase::updateMatrixTotal(){
 	for (int i = 1; i <= size; i++)
 	for (int j = 1; j <= size; j++)
 		Matrix[i][j] = -1;
+    InitMatrix();
     for (int i = 1; i <= step; i++)
     {
         updateMatrix(i);
@@ -86,8 +86,9 @@ void goGameBase::read(const QJsonObject &json)
     yPath.clear();
     QJsonArray load_path = json["paths"].toArray();
     QJsonObject tmpData0 = load_path[0].toObject();
-    firstPlayer = tmpData0["firstPlayer"].toInt();
+    firstPlayer = true;
     step = 0;
+    InitMatrix();
     for(int i = 1;i < load_path.size(); i++)
     {
         QJsonObject tmpData = load_path[i].toObject();

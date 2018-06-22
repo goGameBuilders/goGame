@@ -19,11 +19,21 @@ private:
 	int** Matrix;// 矩阵状态，支持未知大小
 	int step;// 下过的步数
     bool firstPlayer;//先手是哪方,由于最初对棋类规则不了解设定为随机先手，现默认黑棋先手
+    int black = 0;//黑棋个数
+    int white = 0;//白棋个数
 	vector <int> xPath;
 	vector <int> yPath;
 protected:
     inline void touchMatrix(int x, int y, bool state) {
+        if(Matrix[x][y]==0)
+            black--;
+        else if(Matrix[x][y]==1)
+            white--;
         Matrix[x][y] = state;
+        if(state)
+            white++;
+        else
+            black++;
     }//提供子函数对矩阵的访问接口(仅用于改变)
 public:
     enum SaveFormat{
@@ -58,6 +68,8 @@ public:
     inline  bool getFirstPlayer() {
         return firstPlayer;
     }//
+    inline int getBlack(){return black;}
+    inline int getWhite(){return white;}
     inline  bool getWhoTurn() { return (firstPlayer + step) % 2; }
     inline int getMatrix(int x, int y)
 	{
@@ -91,6 +103,7 @@ public:
 			return false;
     }//默认凡是有空的地方就能下，对于黑白棋和别的棋类需要重载
 	virtual int isEnd()= 0;
+    virtual void InitMatrix(){}
 	virtual ~goGameBase() {
 		for (int i = 0; i <= size; i++) {
 			delete[] Matrix[i];
