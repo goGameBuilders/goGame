@@ -64,7 +64,6 @@ private:
     int nowPosCol = -1;            //目前鼠标所在列数
     int nowPosx_accurate = -1;     //目前鼠标所在位置x(精确)
     int nowPosy_accurate = -1;     //目前鼠标所在位置y(精确)
-    int nowTrans[2];               //目前透明棋子位置(黑白棋用)
 
     QLabel* chessPoint[10][10];     //加载黑白棋棋子的载体label
 

@@ -280,38 +280,43 @@ void Window_Play::myPaint(QPainter *paint, int gameType)
                 }
         }               //以上为第一次初始化发生的事件
 
+        //绘制落子标记
 
-       //绘制落子标记
-        if(nowPosCol >= 0 && nowPosRow <= SIZE - 2 &&
-           nowPosRow >= 0 && nowPosCol <= SIZE - 2 &&
-          gameplatform->getgame()->getMatrix(nowPosCol + 1, nowPosRow + 1) == -1)
-        {
-            for(int i = 0; i < SIZE - 1; i++)
-                for(int j = 0; j < SIZE - 1; j++)
+        for(int i = 0; i < SIZE - 1; i++)
+            for(int j = 0; j < SIZE - 1; j++)
+            {
+                if(gameplatform->getgame()->judge(i + 1, j + 1))
                 {
-                    if(i == nowPosCol && j == nowPosRow)
+                    QPixmap mark;
+                    mark.load(":/MyChessPng/ResourcesForReversi/MarkForReversi.png");
+                    chessPoint[i][j]->setPixmap(mark);
+
+                   if(nowPosCol >= 0 && nowPosRow <= SIZE - 2 &&
+                        nowPosRow >= 0 && nowPosCol <= SIZE - 2 &&
+                        i == nowPosCol && j == nowPosRow)
                     {
                         QPixmap tmpPix;
                         if (gameplatform->getgame()->getWhoTurn())
                             tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiBlack_Trans.png");
                         else
                             tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiWhite_Trans.png");
-                       if(isPointed)
+                        if(isPointed)
                         {
-                           chessPoint[nowPosCol][nowPosRow]->setPixmap(tmpPix);
-                           continue;
+                            chessPoint[nowPosCol][nowPosRow]->setPixmap(tmpPix);
+                            continue;
                         }
-                       else
-                       {
+                        else
+                        {
                             chessPoint[i][j]->clear();
-                       }
-                    }
-                    else
-                    {
-                        chessPoint[i][j]->clear();
+                        }
                     }
                 }
-        }                       //结束绘制落子标记
+                else
+                {
+                    if(gameplatform->getgame()->getMatrix(i + 1, j + 1) == -1)
+                        chessPoint[i][j]->clear();
+                }
+            }                    //结束绘制落子标记
 
 
         //绘制棋子
@@ -330,7 +335,7 @@ void Window_Play::myPaint(QPainter *paint, int gameType)
               }
               else
               {
-                  if(i == nowTrans[0] && j == nowTrans[1])
+                  if(gameplatform->getgame()->judge(i + 1, j + 1))
                       continue;
                   chessPoint[i][j]->clear();
               }
@@ -532,8 +537,6 @@ void Window_Play::myMouseMove(QMouseEvent *event, int gameType)
             {
                 nowPosCol = col;
                 nowPosRow = row;
-                nowTrans[0] = col;
-                nowTrans[1] = row;
                 isPointed = true;
             }
 
@@ -541,8 +544,6 @@ void Window_Play::myMouseMove(QMouseEvent *event, int gameType)
 
         else
         {
-            nowTrans[0] = -1;
-            nowTrans[1] = -1;
             nowPosRow = -1;
             nowPosCol = -1;
         }

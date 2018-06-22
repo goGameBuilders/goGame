@@ -135,5 +135,6 @@
         <file>ResourcesForReversi/ReversiWhite.png</file>
         <file>ResourcesForReversi/ReversiBlack_Trans.png</file>
         <file>ResourcesForReversi/ReversiWhite_Trans.png</file>
+        <file>ResourcesForReversi/MarkForReversi.png</file>
     </qresource>
 </RCC>
