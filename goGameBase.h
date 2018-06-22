@@ -18,7 +18,7 @@ private:
 	int size;
 	int** Matrix;// 矩阵状态，支持未知大小
 	int step;// 下过的步数
-    bool firstPlayer;//先手是哪方
+    bool firstPlayer;//先手是哪方,由于最初对棋类规则不了解设定为随机先手，现默认黑棋先手
 	vector <int> xPath;
 	vector <int> yPath;
 protected:
