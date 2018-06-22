@@ -15,6 +15,9 @@ public:
     explicit Window_Select(goGamePlatform* _game, QWidget *parent = 0);
     ~Window_Select();
 
+    void OpenNetWorkWindow(int GameType);
+
+
 private slots:
     void on_pushButton_clicked();
 
@@ -23,6 +26,10 @@ private slots:
     void on_radioButton_2_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_radioButton_3_clicked();
+
+    void on_radioButton_4_clicked();
 
 private:
     Ui::Window_Select *ui;

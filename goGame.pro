@@ -33,8 +33,8 @@ SOURCES += \
     window_start.cpp \
     window_select.cpp \
     window_play.cpp \
-    tcpclient.cpp \
-    tcpserver.cpp
+    window_tcpclient.cpp \
+    window_tcpserver.cpp
 HEADERS += \
         difAI.h \
         difGame.h \
@@ -45,15 +45,15 @@ HEADERS += \
     window_select.h \
     window_play.h \
     style.h \
-    tcpclient.h \
-    tcpserver.h
+    window_tcpclient.h \
+    window_tcpserver.h
 
 FORMS += \
     window_start.ui \
     window_select.ui \
     window_play.ui \
-    tcpclient.ui \
-    tcpserver.ui
+    window_tcpclient.ui \
+    window_tcpserver.ui
 
 RESOURCES += \
     mystyle.qrc

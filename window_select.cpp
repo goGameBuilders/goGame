@@ -26,15 +26,6 @@ void Window_Select::on_pushButton_clicked()
     game->show();
 }   //Select界面中五子棋按钮
 
-void Window_Select::on_radioButton_clicked()
-{
-    myvsWho = 1;
-}
-
-void Window_Select::on_radioButton_2_clicked()
-{
-    myvsWho = 2;
-}
 
 void Window_Select::on_pushButton_3_clicked()
 {
@@ -44,3 +35,25 @@ void Window_Select::on_pushButton_3_clicked()
     game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
     game->show();
 }       //Select界面中黑白棋按钮
+
+void Window_Select::on_radioButton_clicked()
+{
+    myvsWho = 1;
+}   //Select界面中PVE按钮
+
+void Window_Select::on_radioButton_2_clicked()
+{
+    myvsWho = 2;
+}   //Select界面PVP(本地)按钮
+
+void Window_Select::on_radioButton_3_clicked()
+{
+    myvsWho = 3;
+}   //Select界面中PVP(网络主机)按钮
+
+
+
+void Window_Select::on_radioButton_4_clicked()
+{
+    myvsWho = 4;
+}   //Select界面中PVP(网络子机)按钮
