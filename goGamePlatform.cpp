@@ -9,6 +9,9 @@ void goGamePlatform::gameSelect(int myType, int myVsWho){
             gameAI = new FIRAI(game);
         }
     }
+    else if(myType == 3){
+        game = new Reversi(8);
+    }
 }
 
 void goGamePlatform::restartGame()
@@ -22,5 +25,12 @@ void goGamePlatform::restartGame()
             delete gameAI;
             gameAI = new FIRAI(game);
         }
+    }
+    else if(type == 3)
+    {
+        int size = game->getsize();
+        delete game;
+        game = new Reversi(size);
+
     }
 }
