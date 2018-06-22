@@ -2,6 +2,7 @@
 #define TCPCLIENT_H
 
 #include <QWidget>
+#include <QTcpSocket>
 
 namespace Ui {
 class TCPClient;

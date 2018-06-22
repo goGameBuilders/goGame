@@ -2,6 +2,7 @@
 #define TCPSERVER_H
 
 #include <QWidget>
+#include <QTcpServer>
 
 namespace Ui {
 class TCPServer;
