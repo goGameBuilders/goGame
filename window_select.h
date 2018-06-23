@@ -15,7 +15,7 @@ public:
     explicit Window_Select(goGamePlatform* _game, QWidget *parent = 0);
     ~Window_Select();
 
-    void OpenNetWorkWindow(int GameType);
+    void OpenGameWindow(int GameType);
 
 
 private slots:

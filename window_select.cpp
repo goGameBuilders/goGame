@@ -2,6 +2,8 @@
 #include "ui_window_select.h"
 #include "window_play.h"
 #include "ui_window_play.h"
+#include "window_tcpclient.h"
+#include "ui_tcpclient.h"
 
 Window_Select::Window_Select(goGamePlatform* _gameplatform, QWidget *parent) :
     QDialog(parent),
@@ -19,21 +21,14 @@ Window_Select::~Window_Select()
 
 void Window_Select::on_pushButton_clicked()
 {
-    this->close();
-    gameplatform->gameSelect(1, myvsWho);
-    Window_Play* game = new Window_Play(gameplatform, 1);
-    game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
-    game->show();
+   OpenGameWindow(1);
 }   //Select界面中五子棋按钮
 
 
 void Window_Select::on_pushButton_3_clicked()
 {
-    this->close();
-    gameplatform->gameSelect(3, myvsWho);
-    Window_Play* game = new Window_Play(gameplatform, 3);
-    game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
-    game->show();
+    OpenGameWindow(3);
+
 }       //Select界面中黑白棋按钮
 
 void Window_Select::on_radioButton_clicked()
@@ -60,7 +55,23 @@ void Window_Select::on_radioButton_4_clicked()
 
 
 
-void Window_Select::OpenNetWorkWindow(int GameType)
+void Window_Select::OpenGameWindow(int GameType)
 {
+    if(myvsWho == 1 || myvsWho == 2)
+    {
+        this->close();
+        gameplatform->gameSelect(GameType, myvsWho);
+        Window_Play* game = new Window_Play(gameplatform, GameType);
+        game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
+        game->show();
+    }
 
+    if(myvsWho == 4)
+    {
+        Window_TCPClient* tcpclient_win = new Window_TCPClient(gameplatform, GameType);
+        tcpclient_win->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
+        tcpclient_win->setWindowFlags(tcpclient_win->windowFlags() | Qt::WindowStaysOnTopHint);
+        tcpclient_win->setWindowModality(Qt::ApplicationModal);
+        tcpclient_win->show();
+    }
 }
