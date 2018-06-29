@@ -3,7 +3,7 @@
 #include "window_play.h"
 #include "ui_window_play.h"
 #include "window_tcpclient.h"
-#include "ui_tcpclient.h"
+//#include "ui_tcpclient.h"
 
 Window_Select::Window_Select(goGamePlatform* _gameplatform, QWidget *parent) :
     QDialog(parent),

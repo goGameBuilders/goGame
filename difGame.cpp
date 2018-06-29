@@ -55,7 +55,7 @@ int FIR::isEnd() {
 Reversi::Reversi():goGameBase(){
     InitMatrix();
 }
-Reversi::Reversi(int size):goGameBase(size){
+Reversi::Reversi(int asize):goGameBase(asize){
     InitMatrix();
 }
 void Reversi::InitMatrix(){
@@ -315,14 +315,14 @@ bool Reversi::judge(int x, int y,bool swit = false){
     return false;
 }
 int Reversi::isEnd(){
-    if(getstep()==getsize()*getsize()-4)
-    {   if(getWhite()>getBlack())
-            return 1;
-        else if(getWhite()<getBlack())
-            return -1;
-        else
-            return 2;
-    }
+//    if(getstep()==getsize()*getsize()-4)
+//    {   if(getWhite()>getBlack())
+//            return 1;
+//        else if(getWhite()<getBlack())
+//            return -1;
+//        else
+//            return 2;
+//    }
     int sum = 0;
     for(int i = 1; i <=getsize(); i ++)
         for(int j = 1; j<=getsize();j++)
@@ -342,5 +342,14 @@ int Reversi::isEnd(){
                     return 2;
     }
     return 0;
+}
+// 围棋的函数实现
+Go::Go():goGameBase(){}
+Go::Go(int asize):goGameBase(asize){}
+void Go::updateMatrix(int step0){
+    touchMatrix(getPath(step0 - 1, 1), getPath(step0 - 1, 0), (getFirstPlayer() + step0) % 2);
+}
+int Go::isEnd(){
+
 }
 //其他自定义棋类游戏的实现

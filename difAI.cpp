@@ -3,19 +3,50 @@
 #include "difAI.h"
 
 int FIRAI::value(int x, int y){
+    static bool oneByOne=false;
     int sum=0;
-    int theOpposite = (1+game->getFirstPlayer())%2;
+    int Me = (game->getFirstPlayer()+oneByOne)%2;
     int thesize = game->getsize();
     for(int i = 1; i <= thesize; i ++){
-        if(game->getMatrix(i, y)==theOpposite)
+        if(game->getMatrix(i, y)==Me){
             ++sum;
-        if(game->getMatrix(x, i)==theOpposite)
+            if(i>1&&game->getMatrix(i-1, y)==Me){
+                sum+=2;
+                if(i>2&&game->getMatrix(i-2, y)==Me){
+                    sum+=3;
+                }
+            }
+         }
+        if(game->getMatrix(x, i)==Me){
             ++sum;
-        if(x+i<=thesize && y+i<=thesize&&game->getMatrix(x+i, y+i)==theOpposite)
+            if(i>1&&game->getMatrix(x, i-1)==Me){
+                sum+=2;
+                if(i>2&&game->getMatrix(x,i-2)==Me){
+                    sum+=3;
+                }
+            }
+         }
+        if(x+i<=thesize && y+i<=thesize&&game->getMatrix(x+i, y+i)==Me){
             ++sum;
-        if(x-i>0&&y-i>0&&game->getMatrix(x-i, y-i)==theOpposite)
+            if(i>1&&game->getMatrix(x+i-1, y+i-1)==Me){
+                sum+=2;
+                if(i>2&&game->getMatrix(x+i-2, y+i-2)==Me){
+                    sum+=3;
+                }
+            }
+         }
+        if(x-i>0&&y-i>0&&game->getMatrix(x-i, y-i)==Me){
             ++sum;
+            if(i>1&&game->getMatrix(x-i+1, y-i+1)==Me){
+                sum+=2;
+                if(i>2&&game->getMatrix(x-i+2, y-i+2)==Me){
+                    sum+=3;
+                }
+            }
+         }
     }
+    sum = sum*10+sin(x*3.14/thesize)*5+sin(y*3.14/thesize)*5;
+    //oneByOne = !oneByOne;
     return sum;
 }
 
@@ -151,8 +182,8 @@ int ReversiAI::value(int x, int y){
         {
             Total+=20;
         }
-        else if((x==2&&y ==2)||(x==game->getsize()-1&&y ==2)||(x==2&&y ==game->getsize()-1)||(x==game->getsize()-1&&y ==game->getsize()-1))
-            Total-=10;
+        else if(!((x==2&&y ==2)||(x==game->getsize()-1&&y ==2)||(x==2&&y ==game->getsize()-1)||(x==game->getsize()-1&&y ==game->getsize()-1)))
+            Total+=10;
         return Total;
 }
     else

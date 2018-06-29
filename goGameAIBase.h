@@ -11,12 +11,14 @@
 class goGameAIBase{
 private:
     int size;
+    bool Me = false;
 protected:
     goGameBase* game;
 public:
     goGameAIBase(goGameBase* _game):game(_game), size(_game->getsize()){
     }
     inline int getsize(){return size;}
+    inline bool getMe(){return Me;}
     virtual int value(int,int){
         QTime time;
         time= QTime::currentTime();
