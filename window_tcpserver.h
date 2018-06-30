@@ -20,7 +20,7 @@ class Window_TCPServer : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Window_TCPServer(QWidget *parent = 0);
+    explicit Window_TCPServer(goGamePlatform* _gameplatform, int gametype, QWidget *parent = 0);
     ~Window_TCPServer();
 
 private slots:
@@ -34,6 +34,8 @@ private slots:
 
     void newConnection();
 
+    void disconnected();
+
     void readyRead();
 
     void timeout();
@@ -44,9 +46,14 @@ private:
     QTcpServer *tcpServer; //监听套接字
     QTcpSocket *tcpSocket; //通信套接字
 
-    qint16 port;           //要监听的端口
+    QString port;           //要监听的端口
 
     QTimer timer;          //定时器
+
+    goGamePlatform* gameplatform;       //游戏平台类指针
+    int gameType;                       //游戏类型(相同者才可以开始游戏)
+
+    bool listenFlag = 0;                //侦听按钮flag
 };
 
 #endif // WINDOW_TCPSERVER_H

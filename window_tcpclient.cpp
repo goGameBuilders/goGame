@@ -53,6 +53,7 @@ void Window_TCPClient::on_pushButton_Disconnect_clicked()
     tcpSocket->close();
 
     ui->pushButton_Connect->setEnabled(true);
+    ui->pushButton_Disconnect->setEnabled(false);
 
 }       //TCPClient界面中Disconnect按钮
 
@@ -72,6 +73,11 @@ void Window_TCPClient::disconnected()
     msg.append("<b>Message: </b>Successfully disconnect from ");
     msg = msg + ip + " : " + port + "\n";
     ui->textEdit_Read->append(msg);
+    tcpSocket->disconnectFromHost();
+    tcpSocket->close();
+    ui->pushButton_Connect->setEnabled(true);
+    ui->pushButton_Disconnect->setEnabled(false);
+
 }       //SLOT"disconnected" connect with SIGNAL"disconnected"
 
 void Window_TCPClient::readyRead()

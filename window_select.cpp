@@ -4,6 +4,8 @@
 #include "ui_window_play.h"
 #include "window_tcpclient.h"
 #include "ui_tcpclient.h"
+#include "window_tcpserver.h"
+#include "ui_tcpserver.h"
 
 Window_Select::Window_Select(goGamePlatform* _gameplatform, QWidget *parent) :
     QDialog(parent),
@@ -64,6 +66,15 @@ void Window_Select::OpenGameWindow(int GameType)
         Window_Play* game = new Window_Play(gameplatform, GameType);
         game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
         game->show();
+    }
+
+    if(myvsWho == 3)
+    {
+        Window_TCPServer* tcpserver_win = new Window_TCPServer(gameplatform, GameType);
+        tcpserver_win->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
+        tcpserver_win->setWindowFlags(tcpserver_win->windowFlags() | Qt::WindowStaysOnTopHint);
+        tcpserver_win->setWindowModality(Qt::ApplicationModal);
+        tcpserver_win->show();
     }
 
     if(myvsWho == 4)
