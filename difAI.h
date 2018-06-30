@@ -4,6 +4,7 @@
 #include "goGameAIBase.h"
 #include "goGameBase.h"
 #include "difGame.h"
+#include "cmath"
 class FIRAI: public goGameAIBase{
 public:
     FIRAI(goGameBase* _game):goGameAIBase(_game){}

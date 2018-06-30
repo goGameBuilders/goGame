@@ -437,7 +437,7 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
             if(gameplatform->getgame()->judge(ClickPosCol + 1, ClickPosRow + 1)){
                 gameplatform->getgame()->changeMatrix(ClickPosCol + 1,ClickPosRow + 1);
                 bool state = IsEnd();
-                if(gameplatform->isPVE()&&!state){
+                if(gameplatform->isPVE()&&!state&&gameplatform->getgame()->getWhoTurn()==gameplatform->getgameAI()->getMe()){
                     int xy = gameplatform->getgameAI()->valueAll();
                     gameplatform->getgame()->changeMatrix(xy/100, xy%100);
                     IsEnd();
