@@ -72,6 +72,9 @@ private:
     QPainter *paint;
 
 
+
+
+
 };
 
 #endif // WINDOW_PLAY_H

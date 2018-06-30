@@ -96,6 +96,8 @@ void Window_TCPClient::readyRead()
     {
         Window_Play* game = new Window_Play(gameplatform, gameplatform->getType());
         game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
+        game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
+        game->setWindowModality(Qt::ApplicationModal);
         game->show();
 
     }       //接受客户端传送过来的游戏类型

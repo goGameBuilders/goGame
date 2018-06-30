@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif // STYLE_H
+#endif // STYLE_H       //该文件用来改变Qt组件的样式

@@ -29,6 +29,8 @@ private slots:
 
     void on_pushButton_Disconnect_clicked();
 
+    void on_pushButton_Ready_clicked();
+
 public slots:
     void connected();
     void disconnected();
@@ -39,10 +41,12 @@ private:
 
     goGamePlatform *gameplatform;
 
-    int gameType;
+    QString gameType;
     QString ip;
     QString port;
     QTcpSocket *tcpSocket;
+
+    bool readyFlag;
 
 
 

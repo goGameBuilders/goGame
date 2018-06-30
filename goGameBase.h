@@ -21,6 +21,7 @@ private:
     bool firstPlayer;//先手是哪方,由于最初对棋类规则不了解设定为随机先手，现默认黑棋先手
 	vector <int> xPath;
 	vector <int> yPath;
+    bool isYourTurn;                //联机对战时能否下子的判断条件
 protected:
     inline void touchMatrix(int x, int y, bool state) {
         Matrix[x][y] = state;
@@ -58,6 +59,17 @@ public:
     inline  bool getFirstPlayer() {
         return firstPlayer;
     }//
+    bool getIsYourTurn(){return isYourTurn;}
+    void changeYourTurn(){
+        if(isYourTurn)
+            isYourTurn = false;
+        else
+            isYourTurn = true;
+    }
+    void initYourTurn(bool tmp)
+    {
+        isYourTurn = tmp;
+    }
     inline int getBlack(){
         int black = 0;
         for(int i = 1; i <=size; i ++)

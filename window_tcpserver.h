@@ -1,6 +1,29 @@
 #ifndef WINDOW_TCPSERVER_H
 #define WINDOW_TCPSERVER_H
 
+/*
+ *  服务器与客户端传输指令说明：
+ * 00#+gameType+isReady 判断游戏是否可以开始
+ * 01#                  服务器向客户端发送开始游戏指令
+ *
+ *
+ * 0F#                  客户端取消准备
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+
+
+
+
+
 #include <QMainWindow>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -51,7 +74,7 @@ private:
     QTimer timer;          //定时器
 
     goGamePlatform* gameplatform;       //游戏平台类指针
-    int gameType;                       //游戏类型(相同者才可以开始游戏)
+    QString gameType;                       //游戏类型(相同者才可以开始游戏)
 
     bool listenFlag = 0;                //侦听按钮flag
 };

@@ -1,5 +1,7 @@
 #include "window_tcpserver.h"
 #include "ui_window_tcpserver.h"
+#include "window_play.h"
+#include "ui_window_play.h"
 
 Window_TCPServer::Window_TCPServer(goGamePlatform* _gameplatform, int gametype, QWidget *parent) :
     QMainWindow(parent),
@@ -81,6 +83,17 @@ void Window_TCPServer::on_pushButton_Listen_clicked()
 
 void Window_TCPServer::on_pushButton_Start_clicked()
 {
+    QString tmp;
+    tmp.append("开始游戏！");
+    ui->textEdit_Message->append(tmp);
+    Window_Play* game = new Window_Play(gameplatform, gameplatform->getType());
+    game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
+    game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
+    game->setWindowModality(Qt::ApplicationModal);
+    game->show();
+    QString temp;                //用来向服务器传送数据
+    temp = "01#";    //01#为通知客户端游戏开始
+    tcpSocket->write(temp.toUtf8().data());
 
 }       //TcpServer界面中Start按钮
 
@@ -122,6 +135,33 @@ void Window_TCPServer::newConnection()
 
 void Window_TCPServer::readyRead()
 {
+    QByteArray buf = tcpSocket->readAll();
+    QString msg = QString(buf);
+    if(msg.left(3) == "00#")
+    {
+        if(msg[3] == gameType)
+        {
+            ui->pushButton_Start->setEnabled(true);
+            QString tmp;
+            tmp.append("子机已准备好！可以开始游戏！\n");
+            ui->textEdit_Message->append(tmp);
+        }
+        else
+        {
+            QString tmp;
+            tmp.append("<b>警告：</b>对方与您的游戏类型不一致，无法开始游戏。");
+            ui->textEdit_Message->append(tmp);
+        }
+
+    }       //接受客户端传送过来的游戏类型
+    else if(msg.left(3) == "0F#")
+    {
+        ui->pushButton_Start->setEnabled(false);
+        QString tmp;
+        tmp.append("对方取消准备。");
+        ui->textEdit_Message->append(msg);
+
+    }       //客户端取消准备后的行为
 
 }       //TcpServer中SLOT"readyRead"
 

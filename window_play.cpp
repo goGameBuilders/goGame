@@ -46,6 +46,20 @@ Window_Play::Window_Play(goGamePlatform* _gameplatform, int gameType, QWidget *p
                 chessPoint[i][j] = nullptr;
     }
 
+    if(gameplatform->getNet() == 3 || gameplatform->getNet() == 4)
+    {
+        gameplatform->getgame()->initYourTurn(gameplatform->getNet() % 2);    //默认主机先手
+        ui->pushButton->setEnabled(false);
+        ui->pushButton_2->setEnabled(false);
+        ui->pushButton_4->setEnabled(false);
+        ui->pushButton_6->setEnabled(false);
+
+    }
+    else
+    {
+        gameplatform->getgame()->initYourTurn(1);
+    }
+
 
 
 }
@@ -394,7 +408,7 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
                        ClickPosCol = col + 1;
                    }
         }   //if
-        if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd()) //点击有效并且没有结束游戏
+        if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd() && gameplatform->getgame()->getIsYourTurn()) //点击有效并且没有结束游戏
         {
             if(gameplatform->getgame()->judge(ClickPosRow, ClickPosCol)){
                 gameplatform->getgame()->changeMatrix(ClickPosRow,ClickPosCol);
@@ -432,7 +446,7 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
                 ClickPosRow = row;
             }
         }   //if
-        if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd()) //点击有效并且没有结束游戏
+        if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd() && gameplatform->getgame()->getIsYourTurn()) //点击有效并且没有结束游戏
         {
             if(gameplatform->getgame()->judge(ClickPosCol + 1, ClickPosRow + 1)){
                 gameplatform->getgame()->changeMatrix(ClickPosCol + 1,ClickPosRow + 1);
