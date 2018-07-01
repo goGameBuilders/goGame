@@ -16,7 +16,3 @@ public:
     ReversiAI(goGameBase* _game):goGameAIBase(_game){}
     virtual int value(int , int);
 };
-class GoAI:public goGameAIBase{
-public:
-    goAI(goGameBase* _game):goGameAIBase(_game){}
-};

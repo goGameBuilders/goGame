@@ -8,7 +8,7 @@ Window_TCPServer::Window_TCPServer(goGamePlatform* _gameplatform, int gametype, 
     ui(new Ui::Window_TCPServer), gameplatform(_gameplatform)
 {
     ui->setupUi(this);
-    QThreadPool::globalInstance()->setMaxThreadCount(3);        //设置服务器最大线程数
+    QThreadPool::globalInstance()->setMaxThreadCount(5);        //设置服务器最大线程数
     tcpServer = nullptr;
     tcpSocket = nullptr;
     tcpServer = new QTcpServer(this);
@@ -22,7 +22,6 @@ Window_TCPServer::Window_TCPServer(goGamePlatform* _gameplatform, int gametype, 
     ui->pushButton_Disconnect->setEnabled(false);
 
     connect(tcpServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
-    connect(&timer, SIGNAL(timeout()), this, SLOT(timeout()));
 
 
 }
@@ -93,6 +92,7 @@ void Window_TCPServer::on_pushButton_Start_clicked()
     game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
     game->setWindowModality(Qt::ApplicationModal);
     game->show();
+    isStart = 1;
     QString temp;                //用来向服务器传送数据
     temp = "01#";    //01#为通知客户端游戏开始
     tcpSocket->write(temp.toUtf8().data());
@@ -183,10 +183,6 @@ void Window_TCPServer::readyRead()
 
 }       //TcpServer中SLOT"readyRead"
 
-void Window_TCPServer::timeout()
-{
-
-}       //TcpServer中SLOT"timeout"
 
 void Window_TCPServer::disconnected()
 {
@@ -196,7 +192,12 @@ void Window_TCPServer::disconnected()
     msg = QString("失去了与客户端<b>[%1:%2]</b>的连接").arg(ip).arg(port);
     ui->textEdit_Message->append(msg);
     ui->pushButton_Disconnect->setEnabled(false);
-
+    if(isStart == 1)
+    {
+        emit closeWhenDisconnect();
+        gameplatform->restartGame();
+        isStart = 0;
+    }
 }       //TcpServer中SLOT"disconnected"
 
 
@@ -207,5 +208,4 @@ void Window_TCPServer::receiveMouseData(QString x, QString y)
     tcpSocket->write(temp.toUtf8().data());
     tcpSocket->flush();
     tcpSocket->waitForBytesWritten(1000);
-    ui->textEdit_Message->append(temp);
 }
