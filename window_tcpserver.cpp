@@ -89,6 +89,7 @@ void Window_TCPServer::on_pushButton_Start_clicked()
     connect(game, SIGNAL(sendMouseData(QString,QString)), this, SLOT(receiveMouseData(QString,QString)), Qt::DirectConnection);
     connect(this, SIGNAL(sendNetData(int,int)), game, SLOT(receiveNetData(int,int)), Qt::DirectConnection);
     connect(this, SIGNAL(closeWhenDisconnect()), game, SLOT(close()));
+    connect(game, SIGNAL(closeNet()), this, SLOT(closeNet()));
     game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
     game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
     game->setWindowModality(Qt::ApplicationModal);
@@ -209,4 +210,12 @@ void Window_TCPServer::receiveMouseData(QString x, QString y)
     tcpSocket->write(temp.toUtf8().data());
     tcpSocket->flush();
     tcpSocket->waitForBytesWritten(1000);
+}
+
+void Window_TCPServer::closeNet()
+{
+    if(tcpSocket == nullptr)return;
+    //主动和对方断开连接
+    tcpSocket->disconnectFromHost();
+    tcpSocket->close();
 }

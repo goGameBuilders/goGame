@@ -74,7 +74,12 @@ Window_Play::Window_Play(goGamePlatform* _gameplatform, int gameType, QWidget *p
 
 Window_Play::~Window_Play()
 {
+    if(gameplatform->getNet() > 2)
+    {
+        emit closeNet();
+    }
     delete ui;
+
 }
 
 void Window_Play::paintEvent(QPaintEvent *)

@@ -34,6 +34,8 @@ private slots:
 
     void receiveMouseData(QString x, QString y);
 
+    void closeNet();
+
 public slots:
     void connected();
     void disconnected();

@@ -106,6 +106,7 @@ void Window_TCPClient::readyRead()
         connect(game, SIGNAL(sendMouseData(QString,QString)), this, SLOT(receiveMouseData(QString,QString)), Qt::DirectConnection);
         connect(this, SIGNAL(sendNetData(int,int)), game, SLOT(receiveNetData(int,int)), Qt::DirectConnection);
         connect(this, SIGNAL(closeWhenDisconnect()), game, SLOT(close()));
+        connect(game, SIGNAL(closeNet()), this, SLOT(closeNet()));
         game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
         game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
         game->setWindowModality(Qt::ApplicationModal);
@@ -170,5 +171,13 @@ void Window_TCPClient::receiveMouseData(QString x, QString y)
     tcpSocket->flush();
     tcpSocket->waitForBytesWritten(10);
 }       //信号槽，接收鼠标信息
+
+void Window_TCPClient::closeNet()
+{
+    if(tcpSocket == nullptr)return;
+    //主动和对方断开连接
+    tcpSocket->disconnectFromHost();
+    tcpSocket->close();
+}
 
 

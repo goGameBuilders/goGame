@@ -66,6 +66,8 @@ private slots:
 
     void receiveMouseData(QString x, QString y);
 
+    void closeNet();
+
 signals:
     void sendNetData(int x, int y);
     void closeWhenDisconnect();
