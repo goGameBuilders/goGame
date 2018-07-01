@@ -44,7 +44,11 @@ private slots:
 
     void receiveNetData(int x, int y);
 
- signals:
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_8_clicked();
+
+signals:
 
     void sendMouseData(QString x, QString y);
 

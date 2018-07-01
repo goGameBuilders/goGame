@@ -51,6 +51,7 @@ Window_Play::Window_Play(goGamePlatform* _gameplatform, int gameType, QWidget *p
         gameplatform->getgame()->initYourTurn(gameplatform->getNet() % 2);    //默认主机先手
         ui->pushButton->setEnabled(false);
         ui->pushButton_2->setEnabled(false);
+        ui->pushButton_3->setEnabled(false);
         ui->pushButton_4->setEnabled(false);
         ui->pushButton_6->setEnabled(false);
 
@@ -599,9 +600,13 @@ void Window_Play::receiveNetData(int x, int y)
 
 
 
+void Window_Play::on_pushButton_7_clicked()
+{
+
+}   //游戏界面中认输按钮
 
 
+void Window_Play::on_pushButton_8_clicked()
+{
 
-
-
-
+}   //游戏界面中跳过按钮
