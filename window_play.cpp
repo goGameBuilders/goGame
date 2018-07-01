@@ -339,14 +339,18 @@ void Window_Play::myPaint(QPainter *paint, int gameType)
         for(int i = 0; i < SIZE - 1; i ++)
           for(int j = 0; j < SIZE - 1; j ++)
           {
-              QPixmap tmpPix;
+              QPixmap tmpPixW;
+              QPixmap tmpPixB;
+//              QMovie *tmpMovie_WtoB = new QMovie(":/MyChessPng/ResourcesForReversi/Reversi_WtoB.gif");
+//              QMovie *tmpMovie_BtoW = new QMovie(":/MyChessPng/ResourcesForReversi/Reversi_BtoW.gif");
+              tmpPixB.load(":/MyChessPng/ResourcesForReversi/ReversiBlack.png");
+              tmpPixW.load(":/MyChessPng/ResourcesForReversi/ReversiWhite.png");
               if(gameplatform->getgame()->getMatrix(i + 1, j + 1)==0){
-                  tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiBlack.png");
-                  chessPoint[i][j]->setPixmap(tmpPix);
+                  chessPoint[i][j]->setPixmap(tmpPixB);
               }
               else if(gameplatform->getgame()->getMatrix(i + 1, j + 1)==1){
-                  tmpPix.load(":/MyChessPng/ResourcesForReversi/ReversiWhite.png");
-                  chessPoint[i][j]->setPixmap(tmpPix);
+
+                  chessPoint[i][j]->setPixmap(tmpPixW);
               }
               else
               {
@@ -423,9 +427,7 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
                 }
                 bool state = IsEnd();
                 if(gameplatform->isPVE()&&!state){
-                    int xy = gameplatform->getgameAI()->valueAll();
-                    gameplatform->getgame()->changeMatrix(xy/100, xy%100);
-                    IsEnd();
+                    QTimer::singleShot(AIDelay, this, SLOT(AIReleaseEvent()));
                 }
             }
 
@@ -470,9 +472,7 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
                 }
                 bool state = IsEnd();
                 if(gameplatform->isPVE()&&!state&&gameplatform->getgame()->getWhoTurn()==gameplatform->getgameAI()->getMe()){
-                    int xy = gameplatform->getgameAI()->valueAll();
-                    gameplatform->getgame()->changeMatrix(xy/100, xy%100);
-                    IsEnd();
+                    QTimer::singleShot(AIDelay, this, SLOT(AIReleaseEvent()));
                 }
             }
 
@@ -608,5 +608,19 @@ void Window_Play::on_pushButton_7_clicked()
 
 void Window_Play::on_pushButton_8_clicked()
 {
-
+    gameplatform->getgame()->changeMatrix(0, 0);
+    if(gameplatform->getNet() > 2)
+        gameplatform->getgame()->changeYourTurn();
+    bool state = IsEnd();
+    if(gameplatform->isPVE()&&!state&&gameplatform->getgame()->getWhoTurn()==gameplatform->getgameAI()->getMe()){
+        QTimer::singleShot(AIDelay, this, SLOT(AIReleaseEvent()));
+    }
+    update();
 }   //游戏界面中跳过按钮
+
+void Window_Play::AIReleaseEvent()
+{
+    int xy = gameplatform->getgameAI()->valueAll();
+    gameplatform->getgame()->changeMatrix(xy/100, xy%100);
+    IsEnd();
+}
