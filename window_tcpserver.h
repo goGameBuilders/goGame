@@ -64,11 +64,12 @@ private slots:
 
     void readyRead();
 
+    void timeout();
+
     void receiveMouseData(QString x, QString y);
 
 signals:
     void sendNetData(int x, int y);
-    void closeWhenDisconnect();
 
 private:
     Ui::Window_TCPServer *ui;
@@ -79,11 +80,12 @@ private:
 
     QString port;           //要监听的端口
 
+    QTimer timer;          //定时器
+
     goGamePlatform* gameplatform;       //游戏平台类指针
     QString gameType;                       //游戏类型(相同者才可以开始游戏)
 
     bool listenFlag = 0;                //侦听按钮flag
-    bool isStart = 0;
 };
 
 #endif // WINDOW_TCPSERVER_H

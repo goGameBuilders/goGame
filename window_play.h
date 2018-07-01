@@ -55,6 +55,7 @@ private slots:
 
 signals:
 
+
     void sendMouseData(QString x, QString y);
 
 
