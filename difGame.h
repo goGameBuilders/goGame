@@ -25,9 +25,14 @@ public:
       ~Reversi(){}
 };
 class Go :public goGameBase {
+private :
+    int _size = 8;
+    int QiMatrix[20][20];
+    int FlagMatrix[20][20];
 public:
     Go();
     Go(int size);
+    int getsize(){return _size;}
     virtual void updateMatrix(int step0);
     virtual int isEnd();
     void InitQiMatrix();
