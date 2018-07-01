@@ -1,7 +1,7 @@
 //AI基类实现文件
 #include "goGameBase.h"
 #include "goGameAIBase.h"
-
+// 全棋盘进行评估
 int goGameAIBase::valueAll(){
         int place = 0;
         int Max = 0;

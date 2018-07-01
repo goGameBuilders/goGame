@@ -1,11 +1,11 @@
 //不同游戏类的不同AI实现文件
 #include "difGame.h"
 #include "difAI.h"
-
+// 五子棋的AI加入几条简单的策略，具体的策略本身价值不是特别大因此就不再详细介绍
 int FIRAI::value(int x, int y){
     static bool oneByOne=false;
     int sum=0;
-    int Me = (game->getFirstPlayer()+oneByOne)%2;
+    int Me = (game->getFirstPlayer()+oneByOne)%2;// self
     int thesize = game->getsize();
     for(int i = 1; i <= thesize; i ++){
         if(game->getMatrix(i, y)==Me){
@@ -49,7 +49,7 @@ int FIRAI::value(int x, int y){
     //oneByOne = !oneByOne;
     return sum;
 }
-
+//黑白棋的AI相对比较强力，有对地理位置的评估，在此基础上使用贪心法
 int ReversiAI::value(int x, int y){
     int Total = 0, sum = 0;
     int Me = game->getFirstPlayer();
@@ -189,3 +189,4 @@ int ReversiAI::value(int x, int y){
     else
         return -100;
 }
+//围棋AI不进行单独实现，使用倒叙落子

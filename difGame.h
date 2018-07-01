@@ -4,7 +4,7 @@
 #include <iostream>
 
 //继承后仅需实现updateMatrix的相关函数以及胜利判定的相关函数即可
-
+//五子棋的游戏实现
 class FIR  :public goGameBase {
 public:
 	FIR();
@@ -13,7 +13,7 @@ public:
 	virtual int isEnd();
     ~FIR() {}
 };
-//其他自定义棋类游戏
+//黑白棋的游戏实现
 class Reversi :public goGameBase {
 public:
       Reversi();
@@ -24,6 +24,7 @@ public:
       virtual void InitMatrix();
       ~Reversi(){}
 };
+//围棋的游戏实现
 class Go :public goGameBase {
 private :
     int _size = 8;
@@ -41,3 +42,4 @@ public:
     int calculateQiXY(int x, int y,int step0, bool swit);
     void calculateQi(int step0, bool swit);
 };
+//其他自定义棋类游戏

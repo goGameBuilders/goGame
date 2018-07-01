@@ -16,7 +16,7 @@ goGameBase::goGameBase() : gg(false), size(19), step(0) {
     }
 
 goGameBase::goGameBase(int mySize) :gg(false), size(mySize), step(0) {
-
+//默认先手为黑，由于刚开始对规则不是很了解才提供的变量
     firstPlayer = 1;
 	Matrix = new int*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -28,7 +28,8 @@ goGameBase::goGameBase(int mySize) :gg(false), size(mySize), step(0) {
 		}
     }
 }
-
+//对矩阵的改变，是打包的一系列功能，
+//和每个类的具体实现解耦和，只需要提供依次落子的位置即可（（0，0）代表弃子或者黑白棋无子可下时的情况））
 void goGameBase::changeMatrix(int x, int y) {
     static int sum = 0;
 	xPath.push_back(x);
@@ -50,7 +51,7 @@ void goGameBase::changeMatrix(int x, int y) {
     }
     sum = 0;
 }
-
+//悔棋功能的实现
 bool goGameBase::regret() {
 		if (step >= 2)
 		{
@@ -65,7 +66,7 @@ bool goGameBase::regret() {
 		else
 			return false;
 }
-
+//把矩阵初始化，之后按照规则一步一步落子，也是悔棋的实现方式
 void goGameBase::updateMatrixTotal(){
 	for (int i = 1; i <= size; i++)
 	for (int j = 1; j <= size; j++)
@@ -76,7 +77,7 @@ void goGameBase::updateMatrixTotal(){
         updateMatrix(i);
     }
 }
-
+//存档功能，所存数据有首落子者（由于之前对规则不是很了解所致）总步数，以及每步的位置
 void goGameBase::write(QJsonObject &json) const
 {
     QJsonArray save_Path;
@@ -94,7 +95,7 @@ void goGameBase::write(QJsonObject &json) const
     json["paths"] = save_Path;
 }       //向json中写入数据
 
-
+//读档功能
 void goGameBase::read(const QJsonObject &json)
 {
     xPath.clear();
@@ -112,7 +113,7 @@ void goGameBase::read(const QJsonObject &json)
     }
 }      //从json中读取数据
 
-
+//保存游戏
 bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat, QString path) const
 {
     QString fileName;
@@ -141,7 +142,7 @@ bool goGameBase::saveGame(goGameBase::SaveFormat saveFormat, QString path) const
 
 
 }       //存储游戏存档文件至游戏目录下
-
+//导入游戏
 bool goGameBase::loadGame(goGameBase::SaveFormat saveFormat, QString Path)
 {
     QString fileName;

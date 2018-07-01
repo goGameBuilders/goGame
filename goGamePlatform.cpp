@@ -1,5 +1,6 @@
 #include "goGamePlatform.h"
 
+//平台类托管游戏指针和游戏AI指针，游戏类型，是否AI或者服务器模式
 void goGamePlatform::gameSelect(int myType, int myVsWho){
     type = myType;
     vsWho = myVsWho;
@@ -22,7 +23,7 @@ void goGamePlatform::gameSelect(int myType, int myVsWho){
         }
     }
 }
-
+//重新开始
 void goGamePlatform::restartGame()
 {
     if(type == 1)

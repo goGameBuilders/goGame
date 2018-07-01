@@ -64,7 +64,9 @@ public:
     inline  bool getFirstPlayer() {
         return firstPlayer;
     }//
+    //此函数使用不多，为了全面的接口才提供
     bool getIsYourTurn(){return isYourTurn;}
+     //此函数使用不多，为了全面的接口才提供
     void changeYourTurn(){
         if(isYourTurn)
             isYourTurn = false;
@@ -75,6 +77,7 @@ public:
     {
         isYourTurn = tmp;
     }
+    //获取黑子个数
     inline int getBlack(){
         int black = 0;
         for(int i = 1; i <=size; i ++)
@@ -83,6 +86,7 @@ public:
                     black++;
         return black;
     }
+    //获取白子个数
     inline int getWhite(){
         int white = 0;
         for(int i = 1; i <=size; i ++)
@@ -91,12 +95,14 @@ public:
                     white++;
         return white;
     }
+    //获取该谁下的信息
     inline  bool getWhoTurn() { return (firstPlayer + step) % 2; }
+   // 获取（x，y）处的棋盘状态
     inline int getMatrix(int x, int y)
 	{
         return Matrix[x][y];
     } //获得坐标x，y处的状态。
-
+    //提供相应的当前游戏状态的info接口，
     inline const std::string getinfo(){
         std::string info;
         info += "Total steps: \n";

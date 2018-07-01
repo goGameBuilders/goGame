@@ -7,11 +7,13 @@ FIR::FIR() :goGameBase(){
 
 FIR::FIR(int asize) :goGameBase(asize){
 }
-
+//支持悔棋的函数实现
 void FIR::updateMatrix(int step0) {
 	touchMatrix(getPath(step0 - 1, 1), getPath(step0 - 1, 0), (getFirstPlayer() + step0) % 2);
 }
+//判断是否结束
 int FIR::isEnd() {
+    //投降接口
     if(getGG()){
         if(getWhoTurn()==1)
             return 1;
@@ -64,12 +66,14 @@ Reversi::Reversi():goGameBase(){
 Reversi::Reversi(int asize):goGameBase(asize){
     InitMatrix();
 }
+//黑白棋矩阵的初始化
 void Reversi::InitMatrix(){
     touchMatrix(4,4,1);
     touchMatrix(5,5,1);
     touchMatrix(4,5,0);
     touchMatrix(5,4,0);
 }
+//支持悔棋的函数实现
 void Reversi::updateMatrix(int step0){
     int x = getPath(step0 - 1, 1);
     int y = getPath(step0 - 1, 0);
@@ -214,6 +218,7 @@ void Reversi::updateMatrix(int step0){
         }
     }
 }
+//对判断是否能够落子的重载
 bool Reversi::judge(int x, int y,bool swit = false){
     bool Me = (getWhoTurn()+1+swit)%2;
     if (x > 0 && x <= getsize() && y > 0 && y <= getsize() && getMatrix(x, y) == -1)
@@ -320,6 +325,7 @@ bool Reversi::judge(int x, int y,bool swit = false){
     }
     return false;
 }
+//对游戏结束的重载
 int Reversi::isEnd(){
 //    if(getstep()==getsize()*getsize()-4)
 //    {   if(getWhite()>getBlack())
@@ -329,6 +335,7 @@ int Reversi::isEnd(){
 //        else
 //            return 2;
 //    }
+// 对投降的支持
     if(getGG()){
         if(getWhoTurn()==1)
             return 1;
@@ -356,7 +363,7 @@ int Reversi::isEnd(){
     return 0;
 }
 // 围棋的函数实现
-
+//取最大函数
 int Max(int x, int y, int z, int w){
     if(x<y)
         x = y;
@@ -374,6 +381,7 @@ Go::Go(int asize):goGameBase(asize){
     InitQiMatrix();
     InitFlagMatrix();
 }
+//支持悔棋的函数实现
 void Go::updateMatrix(int step0){
     InitQiMatrix();
     InitFlagMatrix();
@@ -385,6 +393,7 @@ void Go::updateMatrix(int step0){
             if(getMatrix(i, j)==theOpp&&QiMatrix[i][j]==0)
                 touchMatrix(i, j, -1);
 }
+//判断单个子是否有气
 int Go::calculateSingleQiXY(int x, int y,int step0,bool swit = true){
     bool theColor = (step0+1+swit)%2;
     if(getMatrix(x, y)==theColor)
@@ -400,6 +409,7 @@ int Go::calculateSingleQiXY(int x, int y,int step0,bool swit = true){
     }
     return 0;
 }
+//判断作为整体的每个子是否有气
 int Go::calculateQiXY(int x, int y, int step0, bool swit= true){
     bool theColor = (step0+1+swit)%2;
     if(x<=0||y<=0||x>getsize()||y>getsize())
@@ -417,6 +427,7 @@ int Go::calculateQiXY(int x, int y, int step0, bool swit= true){
     }
     return 0;
 }
+// 将全棋盘的棋子进行判定， 这些实现都提供一个布尔型变量提供对己方和对方的判定（此处默认己方）
 void Go::calculateQi(int step0, bool swit = true){
         bool theColor = (step0+1+swit)%2;
         for(int i = 1; i <=getsize(); ++i)
@@ -429,17 +440,21 @@ void Go::calculateQi(int step0, bool swit = true){
                 InitFlagMatrix();
             }
 }
+//将棋盘的气初始化
 void Go::InitQiMatrix(){
     for(int i = 0; i < 20; ++i)
         for(int j = 0; j < 20;++j)
             QiMatrix[i][j]=0;
 }
+//棋盘标记
 void Go::InitFlagMatrix(){
     for(int i = 0; i < 20; ++i)
         for(int j = 0; j < 20;++j)
             FlagMatrix[i][j]=0;
 }
+//对游戏结束的重载
 int Go::isEnd(){
+//对投降的支持
     if(getGG()){
         if(getWhoTurn()==1)
             return 1;
