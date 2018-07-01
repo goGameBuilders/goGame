@@ -42,7 +42,12 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void receiveNetData(int x, int y);
+
  signals:
+
+    void sendMouseData(QString x, QString y);
+
 
  protected:
     void paintEvent(QPaintEvent *);         //绘图函数声明

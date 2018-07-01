@@ -3,11 +3,12 @@
 
 /*
  *  服务器与客户端传输指令说明：
- * 00#+gameType+isReady 判断游戏是否可以开始
- * 01#                  服务器向客户端发送开始游戏指令
+ * 00# + gameType + isReady         服务器判断游戏是否可以开始
+ * 01#                              服务器向客户端发送开始游戏指令
+ * 02# + x + # + y + #              服务器向客户端传输游戏内容
+ * 03# + x + # + y + #              客户端向服务器传输游戏内容
  *
- *
- * 0F#                  客户端取消准备
+ * 0F#                              客户端取消准备
  *
  *
  *
@@ -31,6 +32,8 @@
 #include <QHostAddress>
 #include <QJsonDocument>
 #include <QThreadPool>
+#include <vector>
+
 
 #include "goGamePlatform.h"
 
@@ -62,6 +65,12 @@ private slots:
     void readyRead();
 
     void timeout();
+
+    void receiveMouseData(QString x, QString y);
+
+signals:
+    void sendNetData(int x, int y);
+
 private:
     Ui::Window_TCPServer *ui;
 

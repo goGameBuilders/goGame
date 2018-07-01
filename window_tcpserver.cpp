@@ -87,6 +87,8 @@ void Window_TCPServer::on_pushButton_Start_clicked()
     tmp.append("开始游戏！");
     ui->textEdit_Message->append(tmp);
     Window_Play* game = new Window_Play(gameplatform, gameplatform->getType());
+    connect(game, SIGNAL(sendMouseData(QString,QString)), this, SLOT(receiveMouseData(QString,QString)), Qt::DirectConnection);
+    connect(this, SIGNAL(sendNetData(int,int)), game, SLOT(receiveNetData(int,int)), Qt::DirectConnection);
     game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
     game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
     game->setWindowModality(Qt::ApplicationModal);
@@ -159,9 +161,24 @@ void Window_TCPServer::readyRead()
         ui->pushButton_Start->setEnabled(false);
         QString tmp;
         tmp.append("对方取消准备。");
-        ui->textEdit_Message->append(msg);
+        ui->textEdit_Message->append(tmp);
 
     }       //客户端取消准备后的行为
+
+    else if(msg.left(3) == "03#")
+    {
+        std::vector<int> pos;
+        for(int i = 0; i < msg.size(); i++)
+        {
+            if(msg[i] == '#')
+                pos.push_back(i);
+        }
+        int _x = msg.mid(pos[0] + 1, pos[1] - pos[0] - 1).toInt();
+        int _y = msg.mid(pos[1] + 1, pos[2] - pos[1] - 1).toInt();
+        emit sendNetData(_x, _y);
+    }       //接受客户端传来的游戏内容
+
+
 
 }       //TcpServer中SLOT"readyRead"
 
@@ -180,3 +197,12 @@ void Window_TCPServer::disconnected()
     ui->pushButton_Disconnect->setEnabled(false);
 
 }       //TcpServer中SLOT"disconnected"
+
+
+void Window_TCPServer::receiveMouseData(QString x, QString y)
+{
+    QString temp;                //用来向客户端传送数据
+    temp = "02#" + x + "#" + y + "#";    //02#为服务器向客户端传输游戏内容
+    tcpSocket->write(temp.toUtf8().data());
+    ui->textEdit_Message->append(temp);
+}

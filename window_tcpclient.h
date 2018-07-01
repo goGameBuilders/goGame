@@ -6,6 +6,7 @@
 #include <QHostAddress>
 #include <QJsonDocument>
 #include <QTimer>
+#include <vector>
 
 #include "goGamePlatform.h"
 
@@ -31,10 +32,15 @@ private slots:
 
     void on_pushButton_Ready_clicked();
 
+    void receiveMouseData(QString x, QString y);
+
 public slots:
     void connected();
     void disconnected();
     void readyRead();
+
+signals:
+    void sendNetData(int x, int y);
 
 private:
     Ui::Window_TCPClient *ui;

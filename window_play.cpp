@@ -410,8 +410,16 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
         }   //if
         if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd() && gameplatform->getgame()->getIsYourTurn()) //点击有效并且没有结束游戏
         {
-            if(gameplatform->getgame()->judge(ClickPosRow, ClickPosCol)){
+            if(gameplatform->getgame()->judge(ClickPosRow, ClickPosCol))
+            {
                 gameplatform->getgame()->changeMatrix(ClickPosRow,ClickPosCol);
+                if(gameplatform->getNet() > 2)
+                {
+                    QString _x = QString::number(ClickPosRow);
+                    QString _y = QString::number(ClickPosCol);
+                    gameplatform->getgame()->changeYourTurn();
+                    emit sendMouseData(_x, _y);
+                }
                 bool state = IsEnd();
                 if(gameplatform->isPVE()&&!state){
                     int xy = gameplatform->getgameAI()->valueAll();
@@ -448,8 +456,17 @@ void Window_Play::myMousePress(QMouseEvent *event, int gameType)
         }   //if
         if(ClickPosCol != -1 && ClickPosRow != -1 && !gameplatform->getgame()->isEnd() && gameplatform->getgame()->getIsYourTurn()) //点击有效并且没有结束游戏
         {
-            if(gameplatform->getgame()->judge(ClickPosCol + 1, ClickPosRow + 1)){
+            if(gameplatform->getgame()->judge(ClickPosCol + 1, ClickPosRow + 1))
+            {
                 gameplatform->getgame()->changeMatrix(ClickPosCol + 1,ClickPosRow + 1);
+                if(gameplatform->getNet() > 2)
+                {
+                    QString _x = QString::number(ClickPosCol + 1);
+                    QString _y = QString::number(ClickPosRow + 1);
+                    gameplatform->getgame()->changeYourTurn();
+                    emit sendMouseData(_x, _y);
+                    update();
+                }
                 bool state = IsEnd();
                 if(gameplatform->isPVE()&&!state&&gameplatform->getgame()->getWhoTurn()==gameplatform->getgameAI()->getMe()){
                     int xy = gameplatform->getgameAI()->valueAll();
@@ -481,7 +498,8 @@ void Window_Play::myMouseMove(QMouseEvent *event, int gameType)
         nowPosy_accurate = event->pos().y();
         isPointed = false;
         if(tmpx >= margin_x + block_size / 2 && tmpx < margin_x + (block_size) * (SIZE - 1/2)
-        && tmpy >= margin_y + block_size / 2 && tmpy < margin_y + (block_size) * (SIZE - 1/2) )        //棋盘边界判断
+        && tmpy >= margin_y + block_size / 2 && tmpy < margin_y + (block_size) * (SIZE - 1/2)
+        && gameplatform->getgame()->getIsYourTurn())        //棋盘边界判断
         {
             int col = (tmpx - margin_x) / block_size;
             int row = (tmpy - margin_y) / block_size;        //获取离点击点最近的棋盘点坐标(左上角)
@@ -541,7 +559,8 @@ void Window_Play::myMouseMove(QMouseEvent *event, int gameType)
         nowPosy_accurate = event->pos().y();
         isPointed = false;
         if(tmpx >= margin_x - mouse_delta && tmpx < margin_x + (block_size) * (SIZE -1 - 1/2)
-        && tmpy >= margin_y - mouse_delta && tmpy < margin_y + (block_size) * (SIZE - 1 - 1/2) )        //棋盘边界判断
+        && tmpy >= margin_y - mouse_delta && tmpy < margin_y + (block_size) * (SIZE - 1 - 1/2)
+        && gameplatform->getgame()->getIsYourTurn())        //棋盘边界判断
         {
             int col = (tmpx - margin_x) / block_size;
             int row = (tmpy - margin_y) / block_size;
@@ -569,6 +588,14 @@ void Window_Play::myMouseMove(QMouseEvent *event, int gameType)
 
     }       //黑白棋跟随鼠标移动逻辑
 }       //不同种类的棋子的鼠标移动逻辑
+
+
+void Window_Play::receiveNetData(int x, int y)
+{
+    gameplatform->getgame()->changeMatrix(x, y);
+    gameplatform->getgame()->changeYourTurn();
+    update();
+}
 
 
 

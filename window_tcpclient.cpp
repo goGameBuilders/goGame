@@ -92,13 +92,34 @@ void Window_TCPClient::readyRead()
 {
     QByteArray buf = tcpSocket->readAll();
     QString msg = QString(buf);
+    ui->textEdit_Read->append(msg);
     if(msg.left(3) == "01#")
     {
         Window_Play* game = new Window_Play(gameplatform, gameplatform->getType());
+        connect(game, SIGNAL(sendMouseData(QString,QString)), this, SLOT(receiveMouseData(QString,QString)), Qt::DirectConnection);
+        connect(this, SIGNAL(sendNetData(int,int)), game, SLOT(receiveNetData(int,int)), Qt::DirectConnection);
         game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
+        game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
+        game->setWindowModality(Qt::ApplicationModal);
         game->show();
+        return;
 
-    }       //接受客户端传送过来的游戏类型
+    }       //接收服务器传来的开始游戏指令
+
+    else if(msg.left(3) == "02#")
+    {
+        std::vector<int> pos;
+        for(int i = 0; i < msg.size(); i++)
+        {
+            if(msg[i] == '#')
+                pos.push_back(i);
+        }
+        int _x = msg.mid(pos[0] + 1, pos[1] - pos[0] - 1).toInt();
+        int _y = msg.mid(pos[1] + 1, pos[2] - pos[1] - 1).toInt();
+        emit sendNetData(_x, _y);
+    }       //接受服务器传来的游戏内容
+
+
 }       //SLOT"readyRead" connect with SIGNAL"readyRead"
 
 
@@ -127,3 +148,12 @@ void Window_TCPClient::on_pushButton_Ready_clicked()
         tcpSocket->write(tmp.toUtf8().data());
     }
 }       //TcpClient界面中Ready按钮
+
+
+
+void Window_TCPClient::receiveMouseData(QString x, QString y)
+{
+    QString temp;                //用来向服务器传送数据
+    temp = "03#" + x +"#" + y + "#";    //03#为客户端向服务器传输游戏内容
+    tcpSocket->write(temp.toUtf8().data());
+}
