@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QWidget>
+#include <QMovie>
+#include <QTimer>
 
 
 
@@ -44,7 +46,15 @@ private slots:
 
     void receiveNetData(int x, int y);
 
- signals:
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_8_clicked();
+
+    void AIReleaseEvent();      //AI落子事件
+
+
+signals:
+
 
     void sendMouseData(QString x, QString y);
 
@@ -69,6 +79,7 @@ private:
     int nowPosCol = -1;            //目前鼠标所在列数
     int nowPosx_accurate = -1;     //目前鼠标所在位置x(精确)
     int nowPosy_accurate = -1;     //目前鼠标所在位置y(精确)
+    int AIDelay = 1000;            //AI落子延迟时间
 
     QLabel* chessPoint[10][10];     //加载黑白棋棋子的载体label
 
