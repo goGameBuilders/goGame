@@ -37,7 +37,7 @@ public:
     virtual int isEnd();
     void InitQiMatrix();
     void InitFlagMatrix();
-    int calculateSingleQiXY(int x, int y, bool swit);
-    int calculateQiXY(int x, int y, bool swit);
-    void calculateQi(bool swit);
+    int calculateSingleQiXY(int x, int y, int step0, bool swit);
+    int calculateQiXY(int x, int y,int step0, bool swit);
+    void calculateQi(int step0, bool swit);
 };

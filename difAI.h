@@ -18,5 +18,5 @@ public:
 };
 class GoAI:public goGameAIBase{
 public:
-    goAI(goGameBase* _game):goGameAIBase(_game){}
+    GoAI(goGameBase* _game):goGameAIBase(_game){}
 };
