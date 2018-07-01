@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.5.1, 2018-07-01T18:56:17. -->
+=======
+<!-- Written by QtCreator 4.5.1, 2018-07-01T19:12:18. -->
+>>>>>>> parent of abfb564... go
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
