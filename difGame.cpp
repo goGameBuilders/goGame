@@ -344,12 +344,90 @@ int Reversi::isEnd(){
     return 0;
 }
 // 围棋的函数实现
-Go::Go():goGameBase(){}
-Go::Go(int asize):goGameBase(asize){}
+
+int Max(int x, int y, int z, int w){
+    if(x<y)
+        x = y;
+    if(x<z)
+        x = z;
+    if(x<w)
+        x = w;
+    return x;
+}
+Go::Go():goGameBase(){
+    InitQiMatrix();
+    InitFlagMatrix();
+}
+Go::Go(int asize):goGameBase(asize){
+    InitQiMatrix();
+    InitFlagMatrix();
+}
 void Go::updateMatrix(int step0){
+    InitQiMatrix();
+    InitFlagMatrix();
     touchMatrix(getPath(step0 - 1, 1), getPath(step0 - 1, 0), (getFirstPlayer() + step0) % 2);
+    calculateQi(step0, 1);
+    bool theOpp = step0 % 2; //还需确定敌我双方问题 敌方
+    for(int i = 1; i <= getsize();++i)
+        for(int j = 1; j <= getsize(); ++j)
+            if(getMatrix(i, j)==theOpp&&QiMatrix[i][j]==0)
+                touchMatrix(i, j, -1);
+}
+int Go::calculateSingleQiXY(int x, int y,int step0,bool swit = true){
+    bool theColor = (step0+1+swit)%2;
+    if(getMatrix(x, y)==theColor)
+    {
+        if(x+1<=getsize()&&getMatrix(x+1, y)==-1)
+            return 1;
+        if(x-1>0&&getMatrix(x-1, y)==-1)
+            return 1;
+        if(y+1<=getsize()&&getMatrix(x, y+1)==-1)
+            return 1;
+        if(y-1>0&&getMatrix(x, y-1)==-1)
+            return 1;
+    }
+    return 0;
+}
+int Go::calculateQiXY(int x, int y, int step0, bool swit= true){
+    bool theColor = (step0+1+swit)%2;
+    if(x<=0||y<=0||x>getsize()||y>getsize())
+        return 0;
+    if(getMatrix(x, y)==theColor){
+       if(QiMatrix[x][y]==1||FlagMatrix[x][y] == 1){
+           FlagMatrix[x][y]=1;
+           return QiMatrix[x][y];
+       }
+
+       else {
+           FlagMatrix[x][y]=1;
+           return Max(calculateQiXY(x+1, y, step0), calculateQiXY(x-1, y, step0),calculateQiXY(x, y+1 ,step0),calculateQiXY(x, y-1, step0));
+        }
+    }
+    return 0;
+}
+void Go::calculateQi(int step0, bool swit = true){
+        bool theColor = (step0+1+swit)%2;
+        for(int i = 1; i <=getsize(); ++i)
+            for(int j = 1; j <=getsize(); ++j)
+                QiMatrix[i][j]=calculateSingleQiXY(i, j,step0);
+        for(int i = 1; i <=getsize(); ++i)
+            for(int j = 1; j <=getsize(); ++j)
+            {
+                QiMatrix[i][j]=calculateQiXY(i, j, step0);
+                InitFlagMatrix();
+            }
+}
+void Go::InitQiMatrix(){
+    for(int i = 0; i < 20; ++i)
+        for(int j = 0; j < 20;++j)
+            QiMatrix[i][j]=0;
+}
+void Go::InitFlagMatrix(){
+    for(int i = 0; i < 20; ++i)
+        for(int j = 0; j < 20;++j)
+            FlagMatrix[i][j]=0;
 }
 int Go::isEnd(){
-
+ return 0;
 }
 //其他自定义棋类游戏的实现
