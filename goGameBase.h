@@ -23,7 +23,7 @@ private:
 	vector <int> yPath;
     bool isYourTurn;                //联机对战时能否下子的判断条件
 protected:
-    inline void touchMatrix(int x, int y, bool state) {
+    inline void touchMatrix(int x, int y, int state) {
         Matrix[x][y] = state;
     }//提供子函数对矩阵的访问接口(仅用于改变)
 public:
