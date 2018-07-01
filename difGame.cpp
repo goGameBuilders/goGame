@@ -347,11 +347,9 @@ int Reversi::isEnd(){
 Go::Go():goGameBase(){}
 Go::Go(int asize):goGameBase(asize){}
 void Go::updateMatrix(int step0){
-    InitQiMatrix();
-    InitFlagMatrix();
     touchMatrix(getPath(step0 - 1, 1), getPath(step0 - 1, 0), (getFirstPlayer() + step0) % 2);
 }
 int Go::isEnd(){
- return 0;
+
 }
 //其他自定义棋类游戏的实现

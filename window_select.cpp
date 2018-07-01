@@ -33,12 +33,6 @@ void Window_Select::on_pushButton_3_clicked()
     OpenGameWindow(3);
 
 }       //Select界面中黑白棋按钮
-void Window_Select::on_pushButton_2_clicked()
-{
-    OpenGameWindow(2);
-        //Select界面中围棋棋按钮
-}
-
 
 void Window_Select::on_radioButton_clicked()
 {
@@ -95,4 +89,3 @@ void Window_Select::OpenGameWindow(int GameType)
         tcpclient_win->show();
     }
 }
-

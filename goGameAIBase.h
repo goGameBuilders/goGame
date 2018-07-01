@@ -23,7 +23,7 @@ public:
         QTime time;
         time= QTime::currentTime();
         qsrand(time.msec()+time.second()*1000);
-        int n = sin(qrand())*100+100;
+        int n = qrand()*100%997;
              return n;} // 单个的估值函数为虚函数，默认使用随机估值}
     int valueAll();
     ~goGameAIBase(){}

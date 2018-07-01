@@ -30,9 +30,4 @@ public:
     Go(int size);
     virtual void updateMatrix(int step0);
     virtual int isEnd();
-    void InitQiMatrix();
-    void InitFlagMatrix();
-    int calculateSingleQiXY(int x, int y, int step0, bool swit);
-    int calculateQiXY(int x, int y,int step0, bool swit);
-    void calculateQi(int step0, bool swit);
 };
