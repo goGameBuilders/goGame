@@ -24,7 +24,7 @@ Window_Play::Window_Play(goGamePlatform* _gameplatform, int gameType, QWidget *p
     setFixedSize(this->width(), this->height());
 
 
-    if(gameType == 1 || gameType == 2)
+    if(gameType == 1 )
     {
         SIZE = 10;
         block_size = 40;
@@ -32,7 +32,14 @@ Window_Play::Window_Play(goGamePlatform* _gameplatform, int gameType, QWidget *p
         margin_y = 20;
         mouse_delta = 10;
     }
-
+    else if (gameType == 2)
+    {
+        SIZE = 8;
+        block_size = 40;
+        margin_x = 20;
+        margin_y = 20;
+        mouse_delta = 10;
+    }
     else
     {
         SIZE = 9;
