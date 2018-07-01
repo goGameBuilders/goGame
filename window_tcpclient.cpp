@@ -100,12 +100,12 @@ void Window_TCPClient::readyRead()
 {
     QByteArray buf = tcpSocket->readAll();
     QString msg = QString(buf);
-    ui->textEdit_Read->append(msg);
     if(msg.left(3) == "01#")
     {
         Window_Play* game = new Window_Play(gameplatform, gameplatform->getType());
         connect(game, SIGNAL(sendMouseData(QString,QString)), this, SLOT(receiveMouseData(QString,QString)), Qt::DirectConnection);
         connect(this, SIGNAL(sendNetData(int,int)), game, SLOT(receiveNetData(int,int)), Qt::DirectConnection);
+        connect(this, SIGNAL(closeWhenDisconnect()), game, SLOT(close()));
         game->setAttribute(Qt::WA_DeleteOnClose); //关闭时自动删除
         game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
         game->setWindowModality(Qt::ApplicationModal);

@@ -12,6 +12,12 @@ void FIR::updateMatrix(int step0) {
 	touchMatrix(getPath(step0 - 1, 1), getPath(step0 - 1, 0), (getFirstPlayer() + step0) % 2);
 }
 int FIR::isEnd() {
+    if(getGG()){
+        if(getWhoTurn()==1)
+            return 1;
+        else
+            return -1;
+    }
     if(getstep() == getsize()*getsize())
         return 2;
     // 平局
@@ -323,6 +329,12 @@ int Reversi::isEnd(){
 //        else
 //            return 2;
 //    }
+    if(getGG()){
+        if(getWhoTurn()==1)
+            return 1;
+        else
+            return -1;
+    }
     int sum = 0;
     for(int i = 1; i <=getsize(); i ++)
         for(int j = 1; j<=getsize();j++)
@@ -428,6 +440,12 @@ void Go::InitFlagMatrix(){
             FlagMatrix[i][j]=0;
 }
 int Go::isEnd(){
+    if(getGG()){
+        if(getWhoTurn()==1)
+            return 1;
+        else
+            return -1;
+    }
  return 0;
 }
 //其他自定义棋类游戏的实现

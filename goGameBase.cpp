@@ -1,7 +1,7 @@
 //游戏基类，虚类
 #include "goGameBase.h"
 
-goGameBase::goGameBase() : size(19), step(0) {
+goGameBase::goGameBase() : gg(false), size(19), step(0) {
 
         firstPlayer = 1;
 		Matrix = new int*[size + 1];
@@ -15,7 +15,7 @@ goGameBase::goGameBase() : size(19), step(0) {
 		}
     }
 
-goGameBase::goGameBase(int mySize) : size(mySize), step(0) {
+goGameBase::goGameBase(int mySize) :gg(false), size(mySize), step(0) {
 
     firstPlayer = 1;
 	Matrix = new int*[size + 1];

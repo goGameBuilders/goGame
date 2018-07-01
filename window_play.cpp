@@ -107,8 +107,9 @@ void Window_Play::mouseMoveEvent(QMouseEvent *event)
 
 
 bool Window_Play::IsEnd(){
-    if(gameplatform->getgame()->isEnd()){
-        int state = gameplatform->getgame()->isEnd();
+     int state = gameplatform->getgame()->isEnd();
+    if(state){
+
          QMessageBox::StandardButton reply;
          switch(state){
         case -1:
@@ -609,7 +610,8 @@ void Window_Play::receiveNetData(int x, int y)
 
 void Window_Play::on_pushButton_7_clicked()
 {
-
+    gameplatform->getgame()->GG();
+    IsEnd();
 }   //游戏界面中认输按钮
 
 

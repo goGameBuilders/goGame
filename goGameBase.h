@@ -17,6 +17,7 @@ class goGameBase {
 private:
 	int size;
 	int** Matrix;// 矩阵状态，支持未知大小
+    bool gg;
 	int step;// 下过的步数
     bool firstPlayer;//先手是哪方,由于最初对棋类规则不了解设定为随机先手，现默认黑棋先手
 	vector <int> xPath;
@@ -26,6 +27,7 @@ protected:
     inline void touchMatrix(int x, int y, int state) {
         Matrix[x][y] = state;
     }//提供子函数对矩阵的访问接口(仅用于改变)
+
 public:
     enum SaveFormat{
         Json, Binary
@@ -34,7 +36,6 @@ public:
     goGameBase();
 	goGameBase(int mySize);
     void changeMatrix(int x, int y);
-
     bool regret();          //悔棋函数
 
     bool saveGame(goGameBase::SaveFormat saveFormat, QString path)  const;
@@ -55,6 +56,10 @@ public:
 			return xPath[x];
 		return yPath[x];
 	}
+    inline void GG(){
+        gg= !gg;
+    }//提供认输参数的改变
+    inline bool getGG(){return gg;}
     inline  int getwhich(int x, int y) { return Matrix[x][y]; } //获得（x，y）处的棋子状态
     inline  bool getFirstPlayer() {
         return firstPlayer;
