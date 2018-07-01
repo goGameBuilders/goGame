@@ -96,6 +96,7 @@ void Window_TCPServer::on_pushButton_Start_clicked()
     QString temp;                //用来向服务器传送数据
     temp = "01#";    //01#为通知客户端游戏开始
     tcpSocket->write(temp.toUtf8().data());
+    tcpSocket->flush();
 
 }       //TcpServer界面中Start按钮
 
@@ -204,5 +205,7 @@ void Window_TCPServer::receiveMouseData(QString x, QString y)
     QString temp;                //用来向客户端传送数据
     temp = "02#" + x + "#" + y + "#";    //02#为服务器向客户端传输游戏内容
     tcpSocket->write(temp.toUtf8().data());
+    tcpSocket->flush();
+    tcpSocket->waitForBytesWritten(1000);
     ui->textEdit_Message->append(temp);
 }

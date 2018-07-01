@@ -102,7 +102,7 @@ void Window_TCPClient::readyRead()
         game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
         game->setWindowModality(Qt::ApplicationModal);
         game->show();
-        return;
+        tcpSocket->flush();
 
     }       //接收服务器传来的开始游戏指令
 
@@ -135,6 +135,7 @@ void Window_TCPClient::on_pushButton_Ready_clicked()
         QString tmp;                //用来向服务器传送数据
         tmp = "00#" + gameType;     //00#为传输内容是游戏类型的标识
         tcpSocket->write(tmp.toUtf8().data());
+        tcpSocket->flush();
     }
     else
     {
@@ -146,6 +147,7 @@ void Window_TCPClient::on_pushButton_Ready_clicked()
         QString tmp;
         tmp = "0F#";                //0F#表示未准备好
         tcpSocket->write(tmp.toUtf8().data());
+        tcpSocket->flush();
     }
 }       //TcpClient界面中Ready按钮
 
@@ -156,4 +158,6 @@ void Window_TCPClient::receiveMouseData(QString x, QString y)
     QString temp;                //用来向服务器传送数据
     temp = "03#" + x +"#" + y + "#";    //03#为客户端向服务器传输游戏内容
     tcpSocket->write(temp.toUtf8().data());
+    tcpSocket->flush();
+    tcpSocket->waitForBytesWritten(10);
 }

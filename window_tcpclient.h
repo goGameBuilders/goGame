@@ -52,7 +52,7 @@ private:
     QString port;
     QTcpSocket *tcpSocket;
 
-    bool readyFlag;
+    bool readyFlag = 0;
 
 
 
