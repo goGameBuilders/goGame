@@ -84,14 +84,6 @@ void Window_TCPClient::disconnected()
     ui->pushButton_Connect->setEnabled(true);
     ui->pushButton_Disconnect->setEnabled(false);
     ui->pushButton_Ready->setEnabled(false);
-    readyFlag = 0;
-    ui->pushButton_Ready->setText("Ready");
-    if(isStart == 1)
-    {
-        emit closeWhenDisconnect();
-        gameplatform->restartGame();
-        isStart = 0;
-    }
 
 
 }       //SLOT"disconnected" connect with SIGNAL"disconnected"
@@ -110,7 +102,6 @@ void Window_TCPClient::readyRead()
         game->setWindowFlags(game->windowFlags() | Qt::WindowStaysOnTopHint);
         game->setWindowModality(Qt::ApplicationModal);
         game->show();
-        isStart = 1;
         tcpSocket->flush();
 
     }       //接收服务器传来的开始游戏指令
@@ -169,6 +160,4 @@ void Window_TCPClient::receiveMouseData(QString x, QString y)
     tcpSocket->write(temp.toUtf8().data());
     tcpSocket->flush();
     tcpSocket->waitForBytesWritten(10);
-}       //信号槽，接收鼠标信息
-
-
+}

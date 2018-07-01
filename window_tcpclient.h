@@ -41,7 +41,6 @@ public slots:
 
 signals:
     void sendNetData(int x, int y);
-    void closeWhenDisconnect();
 
 private:
     Ui::Window_TCPClient *ui;
@@ -54,7 +53,6 @@ private:
     QTcpSocket *tcpSocket;
 
     bool readyFlag = 0;
-    bool isStart = 0;
 
 
 
